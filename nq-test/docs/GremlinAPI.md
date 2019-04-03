@@ -1,0 +1,1 @@
+Cayley Gremlin API was renamed to [Gizmo](GizmoAPI.md) to avoid confusion with TinkerPop Gremlin API.
