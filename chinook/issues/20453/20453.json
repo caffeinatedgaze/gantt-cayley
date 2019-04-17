@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2009-01-05T19:00:44.273-08:00",
+    "CommentCount": 1,
+    "Custom": "",
+    "Description": "When trying to create the Chinook Database for the first time (SQL Express only) we get the following error:\n\nMsg 911, Level 16, State 1, Server VM-MCPD\\SQLEXPRESS, Line 13\nCould not locate entry in sysdatabases for database 'Chinook'. No entry found with that name. Make sure that the name is entered correctly.\n\nThe scripts for the other databases do not have this issue.\n\nWorkaround:\nEdit the Scripts\\SqlServer\\CreateDB.sql and add the GO command line right after the CREATE DATABASE line:\n\nIF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'Chinook') DROP DATABASE [Chinook];\nCREATE DATABASE [Chinook];\nGO",
+    "LastUpdatedDate": "2009-01-05T19:00:44.273-08:00",
+    "PlannedForRelease": "Chinook Database 1.1",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "High",
+      "Severity": 150,
+      "Id": 3
+    },
+    "ProjectName": "ChinookDatabase",
+    "ReportedDate": "2009-01-05T13:30:12.6-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Error when creating database for the first time in SQL Server Express",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 20453
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Resolved with changeset 45543.",
+      "PostedDate": "2009-01-05T19:00:44.273-08:00",
+      "Id": 18253
+    }
+  ]
+}

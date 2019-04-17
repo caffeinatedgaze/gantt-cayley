@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "This feature has been implemented and available in the 1.4 release.",
+    "ClosedDate": "2012-12-03T09:33:02.053-08:00",
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "I would love to see a DB2 version of the database.\n\nExpress version: http://db2express.com/\nADO.NET provider: http://www.ibm.com/developerworks/wikis/x/YSM",
+    "LastUpdatedDate": "2017-11-29T09:14:10.213-08:00",
+    "PlannedForRelease": "Chinook Database 1.4",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "ChinookDatabase",
+    "ReportedDate": "2012-10-18T15:20:37.027-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Add Support for DB2",
+    "Type": {
+      "Name": "Feature",
+      "Id": 1
+    },
+    "VoteCount": 1,
+    "Id": 29378
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

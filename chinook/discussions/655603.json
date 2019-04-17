@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "1476369",
+    "ThreadId": "655603",
+    "Html": "I learned working with this database that PostgreSQL is case-sensitive as to table and field names. By default, they're assumed to be lower-case. Unfortunately, the code here creates them as mixed-case, so it's necessary to quote every use of a table or field name. Since this project seems to be dead, I guess this is by way of a warning for those who come along after me.<br />\n",
+    "PostedDate": "2016-06-15T12:37:18.557-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

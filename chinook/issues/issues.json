@@ -1,0 +1,110 @@
+[
+  {
+    "Id": 20380,
+    "Title": "Change Chinook database schema representation"
+  },
+  {
+    "Id": 20381,
+    "Title": "Need to create additional sample data for customers"
+  },
+  {
+    "Id": 20382,
+    "Title": "Add a many-to-many relationship to the schema"
+  },
+  {
+    "Id": 20383,
+    "Title": "Add support for SQL Server Compact"
+  },
+  {
+    "Id": 20385,
+    "Title": "Change version number to 1.1"
+  },
+  {
+    "Id": 20453,
+    "Title": "Error when creating database for the first time in SQL Server Express"
+  },
+  {
+    "Id": 22114,
+    "Title": "Feature Request"
+  },
+  {
+    "Id": 22115,
+    "Title": "Feature Request: Add Support for NHibernate HiLo generator"
+  },
+  {
+    "Id": 22184,
+    "Title": "Feature Request: Data model change to allow implementation of inheritance mapping strategies"
+  },
+  {
+    "Id": 24257,
+    "Title": "Indexes based on primary keys should be UNIQUE"
+  },
+  {
+    "Id": 26637,
+    "Title": "Name the Primary Keys Constraints in the SQL Server model!"
+  },
+  {
+    "Id": 26638,
+    "Title": "DROP DATABASE if database exists (SQLServer)"
+  },
+  {
+    "Id": 26964,
+    "Title": "Feature Request : Add a Pluralized TableName Version of the scripts"
+  },
+  {
+    "Id": 29371,
+    "Title": "iTunes converter should consider albums of identical names by different artists."
+  },
+  {
+    "Id": 29372,
+    "Title": "Add support for EffiProz database"
+  },
+  {
+    "Id": 29373,
+    "Title": "Add support for SQLite"
+  },
+  {
+    "Id": 29374,
+    "Title": "Add Support for PostgreSQL"
+  },
+  {
+    "Id": 29375,
+    "Title": "Provide sdf file for SQL Server Compact 4"
+  },
+  {
+    "Id": 29376,
+    "Title": "Please add \"Electronica\" as a genre"
+  },
+  {
+    "Id": 29377,
+    "Title": "EF 4 Designer Doesn't Show Chinook 1.3 MSSQL Relations"
+  },
+  {
+    "Id": 29378,
+    "Title": "Add Support for DB2"
+  },
+  {
+    "Id": 29379,
+    "Title": "Add SET DATEFORMAT statement for SQL Server script"
+  },
+  {
+    "Id": 29380,
+    "Title": "Wrap SQLite script into Transaction"
+  },
+  {
+    "Id": 29381,
+    "Title": "trouble installing sqlite version on windows 8"
+  },
+  {
+    "Id": 29382,
+    "Title": "additional issues installing on windows8"
+  },
+  {
+    "Id": 29383,
+    "Title": "SQLCE NuGet package references a pre-release version of SQLCE runtime"
+  },
+  {
+    "Id": 29384,
+    "Title": "Issue with encoding of Chinook_PostgreSql.sql"
+  }
+]

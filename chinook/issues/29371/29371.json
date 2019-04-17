@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "iTunes Conversion",
+      "DisplayName": "iTunes Conversion"
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Note: This bug has been reported by a user (Thanks Gordon!).\n\nRegardless, the following code in ITunesToChinookDataSetConverter.cs:\n \nprivate static int AddAlbum(TrackInfo trackInfo, ChinookDataSet ds)\n{\n  DataRow[] results = ds.Album.Select(\"Title = '\" + trackInfo.AlbumName.Replace(\"'\", \"''\") + \"'\" );\n...\n}\n\ndoesn't take into account albums of identical names by different artists. So, for example, songs from Moby's \"Play\" and Great Big Sea's \"Play\" are added to the database referencing the the same artist id (in this case GBS). Adding an ArtistId qualifier in the search cleans it up.\n\nUpdate: The current iTunes converter associates an Album with the TrackArtist, but it should consider the AlbumArtist. The right solution is to remove the Album/Artist relationship and add the Track/Artist relationship so that it can covert the scenario of Album from multiple artists. Moving this to Release 2.0 since it requires schema changes.",
+    "LastUpdatedDate": "2017-11-29T09:14:10.213-08:00",
+    "PlannedForRelease": "Chinook Database 2.0",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "ChinookDatabase",
+    "ReportedDate": "2010-11-06T18:08:22.913-07:00",
+    "Status": {
+      "Name": "Active",
+      "Id": 2
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "iTunes converter should consider albums of identical names by different artists.",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 29371
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

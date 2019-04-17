@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Should be update to require minimum version: 4.0.8876.1 \r\n\r\nHappy to do a pull request if desired...",
+    "LastUpdatedDate": "2017-11-29T09:14:10.213-08:00",
+    "PlannedForRelease": "Chinook Database 1.4",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Medium",
+      "Severity": 100,
+      "Id": 2
+    },
+    "ProjectName": "ChinookDatabase",
+    "ReportedDate": "2014-10-24T04:25:27.847-07:00",
+    "Status": {
+      "Name": "Resolved",
+      "Id": 7
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "SQLCE NuGet package references a pre-release version of SQLCE runtime",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 29383
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Thanks for reporting this. It is fixed now. Please run Update-Package to get the latest version.",
+      "PostedDate": "2014-11-22T22:56:36.17-08:00",
+      "Id": 166410
+    }
+  ]
+}

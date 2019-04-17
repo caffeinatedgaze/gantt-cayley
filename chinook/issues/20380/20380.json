@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": "2009-01-04T20:03:34.167-08:00",
+    "CommentCount": 0,
+    "Custom": "",
+    "Description": "The Chinook schema database is represented by a DataSet schema, which is used by T4 templates to generate the SQL scripts.\n\nInvestigate if it is feasible to use a newer representation (dbml or edmx) instead, and if so, convert the current schema and update the T4 templates.",
+    "LastUpdatedDate": "2009-01-04T20:03:34.167-08:00",
+    "PlannedForRelease": "Chinook Database 1.1",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "ChinookDatabase",
+    "ReportedDate": "2008-12-27T13:54:38.017-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Change Chinook database schema representation",
+    "Type": {
+      "Name": "Task",
+      "Id": 2
+    },
+    "VoteCount": 1,
+    "Id": 20380
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

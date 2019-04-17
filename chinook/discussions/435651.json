@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1011432",
+    "ThreadId": "435651",
+    "Html": "Hello. \r<br />\nDo not create this database on Windows 7 Ultimate. I am attentively read the instructions for creating a database, but i no get database.\r<br />\nAll along i get message, speaking that in the process of create database have conflicts INSERT with FOREIGN KEY.\r<br />\nHow to solve this issue?<br />\n",
+    "PostedDate": "2013-03-06T14:22:52.947-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1011534",
+    "ThreadId": "435651",
+    "Html": "which database are you trying to create (SQL Server, MySQL)? And which script version are you using (1.4 or 1.3)?<br />\n<br />\nThanks<br />\n",
+    "PostedDate": "2013-03-06T20:03:45.563-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "1011560",
+    "ThreadId": "435651",
+    "Html": "And this and the other script. I trying create database for training purposes. That to work with databases in Management Studio<br />\n",
+    "PostedDate": "2013-03-06T22:02:14.483-08:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

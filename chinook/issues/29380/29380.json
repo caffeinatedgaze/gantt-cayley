@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": null,
+    "Description": "Wrap at least the INSERT Statements within the sqlite script into transactions per default.\r\n",
+    "LastUpdatedDate": "2017-11-29T09:14:10.213-08:00",
+    "PlannedForRelease": "Chinook Database 2.0",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Unassigned",
+      "Severity": 0,
+      "Id": 0
+    },
+    "ProjectName": "ChinookDatabase",
+    "ReportedDate": "2013-03-06T20:06:03.983-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Wrap SQLite script into Transaction",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 29380
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

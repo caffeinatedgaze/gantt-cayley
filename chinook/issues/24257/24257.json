@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed and Verified.",
+    "ClosedDate": "2010-11-05T14:15:06.683-07:00",
+    "CommentCount": 0,
+    "Custom": "",
+    "Description": "If not, ORM tools like CodeSmith do not work as expected (as a non-unique index indicates that more rows will be returned per key). I had planned to feature Chinook in a blog post, but this must be fixed for the following tables/indexes, before I can do that:\n\nCREATE INDEX IPK_Genre ON Genre(GenreId);\nCREATE INDEX IPK_MediaType ON MediaType(MediaTypeId);\nCREATE INDEX IPK_Artist ON Artist(ArtistId);\nCREATE INDEX IPK_ProductItem ON Album(AlbumId);\nCREATE INDEX IPK_Track ON Track(TrackId);\nCREATE INDEX IPK_Employee ON Employee(EmployeeId);\nCREATE INDEX IPK_Customer ON Customer(CustomerId);\nCREATE INDEX IPK_Invoice ON Invoice(InvoiceId);\nCREATE INDEX IPK_InvoiceLine ON InvoiceLine(InvoiceLineId);\nCREATE INDEX IPK_Playlist ON Playlist(PlaylistId);\nCREATE INDEX IPK_PlaylistTrack ON PlaylistTrack(PlaylistId);\n\nshould be\n\nCREATE UNIQUE INDEX IPK_Genre ON Genre(GenreId);\nCREATE UNIQUE INDEX IPK_MediaType ON MediaType(MediaTypeId);\nCREATE UNIQUE INDEX IPK_Artist ON Artist(ArtistId);\nCREATE UNIQUE INDEX IPK_ProductItem ON Album(AlbumId);\nCREATE UNIQUE INDEX IPK_Track ON Track(TrackId);\nCREATE UNIQUE INDEX IPK_Employee ON Employee(EmployeeId);\nCREATE UNIQUE INDEX IPK_Customer ON Customer(CustomerId);\nCREATE UNIQUE INDEX IPK_Invoice ON Invoice(InvoiceId);\nCREATE UNIQUE INDEX IPK_InvoiceLine ON InvoiceLine(InvoiceLineId);\nCREATE UNIQUE INDEX IPK_Playlist ON Playlist(PlaylistId);\nCREATE UNIQUE INDEX IPK_PlaylistTrack ON PlaylistTrack(PlaylistId);\n\nLikewise, the enclosed chinook.sdf file needs to be recreated.",
+    "LastUpdatedDate": "2010-11-05T14:15:06.683-07:00",
+    "PlannedForRelease": "Chinook Database 1.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "ChinookDatabase",
+    "ReportedDate": "2009-08-10T07:14:48.583-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Indexes based on primary keys should be UNIQUE",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 24257
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

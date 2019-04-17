@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 0,
+    "Custom": "",
+    "Description": "Feature requests by Evoluteur:\n- script to drop all tables (because it needs to drop ref integrity first).\n- triggers to update order total.\n- a few records in Chinese or Japanese",
+    "LastUpdatedDate": "2009-04-19T21:55:25.237-07:00",
+    "PlannedForRelease": "",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "ChinookDatabase",
+    "ReportedDate": "2009-04-19T21:55:25.237-07:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Feature Request",
+    "Type": {
+      "Name": "Feature",
+      "Id": 1
+    },
+    "VoteCount": 1,
+    "Id": 22114
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

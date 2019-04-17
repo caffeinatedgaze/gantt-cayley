@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "This issue has been fixed and available in the 1.4 release.",
+    "ClosedDate": "2012-12-03T09:31:27.147-08:00",
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "Not sure whether this is a Chinook issue or Entity Framework issue...\n\nI got Chinook 1.3 from the releases, installed the MSSQL one on MSSQL 2008 Express, created a new .NET 4 project, Added Entity Framework 4 EDMX item, chose to generate from database and pointed to the previously mentioned DB.\nIt got all tables correct, but not any of the relations.\n\nI tried enforcing some relations and / or setting update/delete to Cascade instead of None and deleting the corresponding tables (both ends) and re-adding them to model. No relations showed still.\n\nThe relations are in the DB and I can see and modify them as above and even can see them clearly in SQL Server diagram, but not in EF Designer (nor of course generated classes).\n\nAny idea what could be the trick? (Sorry if EF-only question - Just wanted to see if you are aware of the issue, since it felt pretty straight forward exercise).",
+    "LastUpdatedDate": "2017-11-29T09:14:10.213-08:00",
+    "PlannedForRelease": "Chinook Database 1.4",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "ChinookDatabase",
+    "ReportedDate": "2011-01-05T12:17:02.48-08:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "EF 4 Designer Doesn't Show Chinook 1.3 MSSQL Relations",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 4,
+    "Id": 29377
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Hi, there was a question about this on the EF forum at Microsoft today, and I investigated it.\n\nThe problem is the creation of the unike IPK indexes. Not sure why they corrupts it, but they isn't neccessary since the primary key constraint itself is unique, so you can remove those from the SQL script.",
+      "PostedDate": "2011-06-20T11:57:59.353-07:00",
+      "Id": 37980
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+store:
+  # backend to use
+  backend: sqlite
+  # address or path for the database
+  address:
+    sql: "..chinook/sourceCode/chinookdatabase/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite"
+  # open database in read-only mode
+  read_only: false
+  # backend-specific options
+  options:
+    nosync: false
+query:
+  timeout: 30s
+load:
+  ignore_duplicates: false
+  ignore_missing: false
+  batch: 10000

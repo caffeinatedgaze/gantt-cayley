@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "It would be nice to include\r\n```\r\nSET DATEFORMAT ymd;\r\n```\r\nstatement to SQL Server script file (maybe some other scripts also need that fix) to guarantee correct data conversion from varchar to datetime. \r\nRight now (Chinook Database 1.4 release) conversion fails for those who have different from year/month/date culture setting and thus some tables (in particular Customer, Employee, Invoice, InvoiceLine) will remain empty after script execution (foreign key conflicts).",
+    "LastUpdatedDate": "2017-11-29T09:14:10.213-08:00",
+    "PlannedForRelease": "Chinook Database 2.0",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "ChinookDatabase",
+    "ReportedDate": "2013-02-13T07:01:44.547-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Add SET DATEFORMAT statement for SQL Server script",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 1,
+    "Id": 29379
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Thanks for catching this. We will fix it next release.",
+      "PostedDate": "2013-02-13T09:23:29.9-08:00",
+      "Id": 89194
+    }
+  ]
+}

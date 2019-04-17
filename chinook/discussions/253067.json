@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "593980",
+    "ThreadId": "253067",
+    "Html": "\r\n<p>Hi Chinook,</p>\r\n<p>I was looking for a nice demo database model to use with CUBRID Database (<a title=\"CUBRID - Open Source Database Management System\" href=\"http://www.cubrid.org\">http://www.cubrid.org</a>), so I found Chinook Database. I am planning to create its CUBRID\r\n version, so was wondering if the Chinook Database Model ported to CUBRID can be accepted by you afterwards. I will provide the script as well to auto install the database in the CUBRID Server.</p>\r\n<p>Please let me know you answer.</p>\r\n",
+    "PostedDate": "2011-04-08T00:44:20.34-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  },
+  {
+    "Id": "594782",
+    "ThreadId": "253067",
+    "Html": "<p>Hi&nbsp;kadishmal,</p>\r\n<p>Yes, of course we would like to support CRUBID. If you can provide the script it will be great.</p>\r\n<p>Thank you!</p>\r\n<p>Luis</p>",
+    "PostedDate": "2011-04-09T19:10:47.267-07:00",
+    "UserRole": null,
+    "MarkedAsAnswerDate": null
+  }
+]

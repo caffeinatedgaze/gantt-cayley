@@ -1,0 +1,45 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "Content",
+      "DisplayName": "Content"
+    },
+    "ClosedComment": "",
+    "ClosedDate": null,
+    "CommentCount": 1,
+    "Custom": null,
+    "Description": "I know this is a just a \"sample\" database, but I'm using it in demos and I can't have people see me choosing lame music. Please add \"Electronica\" as a genre in the database. :)",
+    "LastUpdatedDate": "2017-11-29T09:14:10.213-08:00",
+    "PlannedForRelease": "Chinook Database 2.0",
+    "ReleaseVisibleToPublic": false,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "ChinookDatabase",
+    "ReportedDate": "2010-11-30T10:22:41.74-08:00",
+    "Status": {
+      "Name": "Proposed",
+      "Id": 1
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Please add \"Electronica\" as a genre",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 29376
+  },
+  "FileAttachments": [],
+  "Comments": [
+    {
+      "Message": "Thanks for the suggestion. We will do it. If you have an iTunes Music Library.xml that contains \"Electronica\" allbums and would like to share it, please let me know.",
+      "PostedDate": "2010-12-03T15:12:59.493-08:00",
+      "Id": 19477
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed and Verified.",
+    "ClosedDate": "2010-11-05T14:15:37.037-07:00",
+    "CommentCount": 0,
+    "Custom": "",
+    "Description": "Folks,\n\nGreat to have more demo and sample databases for SQL Server - but by all means, name the primary key constraints!!\n\nSo instead of\n\nCREATE TABLE Genre (     GenreId INTEGER NOT NULL IDENTITY,    Name NVARCHAR(120),    PRIMARY KEY(GenreId));\n\nwhich gives you a primary key constraint of something like:    PK__Genre__0385057E1332DBDC      (yuck!!)\n\nplease do use \n\nCREATE TABLE Genre (     GenreId INTEGER NOT NULL IDENTITY,    Name NVARCHAR(120),    CONSTRAINT PK_Genre PRIMARY KEY(GenreId));\n\nwhich gives you a nice, clear, dependable and nicely named PK constraint name!",
+    "LastUpdatedDate": "2010-11-05T14:15:37.037-07:00",
+    "PlannedForRelease": "Chinook Database 1.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "ChinookDatabase",
+    "ReportedDate": "2010-03-30T14:41:42.767-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "Name the Primary Keys Constraints in the SQL Server model!",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 3,
+    "Id": 26637
+  },
+  "FileAttachments": [],
+  "Comments": []
+}

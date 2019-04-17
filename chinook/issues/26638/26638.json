@@ -1,0 +1,39 @@
+{
+  "WorkItem": {
+    "AffectedComponent": {
+      "Name": "",
+      "DisplayName": ""
+    },
+    "ClosedComment": "Fixed and Verified.",
+    "ClosedDate": "2010-11-05T14:15:52.593-07:00",
+    "CommentCount": 0,
+    "Custom": "",
+    "Description": "If I start CreateDB.sql and database already exists and used (connections to database is opened) database not droped\n\nSolution could be add additional logic \n\nCreateDb.sql LINE:10\n\n \n\nIF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'Chinook')\nBEGIN \n ALTER DATABASE [Chinook] \n SET OFFLINE \n WITH ROLLBACK IMMEDIATE;\n \n \n ALTER DATABASE [Chinook]\n  SET ONLINE;  \n  \n DROP DATABASE [Chinook]; \nEND \nCREATE DATABASE [Chinook];\n\nIF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'Chinook')\n\nBEGIN \n\n--Take database offline ignoring any connection made\n\n ALTER DATABASE [Chinook] \n\n SET OFFLINE \n\n WITH ROLLBACK IMMEDIATE;  \n\n \n\n--Bring online before delete \n\n ALTER DATABASE [Chinook]\n\n  SET ONLINE;  \n\n \n\n DROP DATABASE [Chinook]; \n\nEND \n\nCREATE DATABASE [Chinook];",
+    "LastUpdatedDate": "2010-11-05T14:15:52.593-07:00",
+    "PlannedForRelease": "Chinook Database 1.2",
+    "ReleaseVisibleToPublic": true,
+    "Priority": {
+      "Name": "Low",
+      "Severity": 50,
+      "Id": 1
+    },
+    "ProjectName": "ChinookDatabase",
+    "ReportedDate": "2010-03-30T14:45:08.263-07:00",
+    "Status": {
+      "Name": "Closed",
+      "Id": 4
+    },
+    "ReasonClosed": {
+      "Name": "Unassigned"
+    },
+    "Summary": "DROP DATABASE if database exists (SQLServer)",
+    "Type": {
+      "Name": "Issue",
+      "Id": 3
+    },
+    "VoteCount": 2,
+    "Id": 26638
+  },
+  "FileAttachments": [],
+  "Comments": []
+}
