@@ -1,0 +1,18 @@
+store:
+  # backend to use
+  backend: postgres
+  # address or path for the database
+  # address: "./cayley.db"
+  address: "user=ff dbname=testdb password=yoko sslmode=disable" 
+  # open database in read-only mode
+  read_only: false
+  # backend-specific options
+  options:
+    nosync: false
+query:
+  timeout: 30s 
+load:
+  ignore_duplicates: false
+  ignore_missing: false
+  batch: 10000
+
