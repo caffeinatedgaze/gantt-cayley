@@ -9,25 +9,13 @@ projects = [
         'name': 'Gantt Cayley',
         'team': '17-7',
         'description': 'Shaun The Sheep',
-        'chart_link': """
-                        <a href="https://plot.ly/~fenchelfen/0/?share_key=v0hDkhbPYDbRwjQZPRJ5j5" target="_blank" title="gantt-simple-gantt-chart" style="display: block; text-align: center;">
-                            <img src="https://plot.ly/~fenchelfen/0.png?share_key=v0hDkhbPYDbRwjQZPRJ5j5" alt="gantt-simple-gantt-chart"
-                            style="max-width: 100%;"onerror="this.onerror=null;this.src='https://plot.ly/404.png';" />
-                        </a>
-                        <script data-plotly="fenchelfen:0" sharekey-plotly="v0hDkhbPYDbRwjQZPRJ5j5" src="https://plot.ly/embed.js" async></script>
-                      """
+        'chart_link': "https://plot.ly/~fenchelfen/0"
     },
     {
         'name': 'Cross Service',
         'team': '17-7',
         'description': 'Shalala',
-        'chart_link': """
-                <a href="https://plot.ly/~fenchelfen/0/?share_key=v0hDkhbPYDbRwjQZPRJ5j5" target="_blank" title="gantt-simple-gantt-chart" style="display: block; text-align: center;">
-                    <img src="https://plot.ly/~fenchelfen/0.png?share_key=v0hDkhbPYDbRwjQZPRJ5j5" alt="gantt-simple-gantt-chart"
-                    style="max-width: 100%;"onerror="this.onerror=null;this.src='https://plot.ly/404.png';" />
-                </a>
-                <script data-plotly="fenchelfen:0" sharekey-plotly="v0hDkhbPYDbRwjQZPRJ5j5" src="https://plot.ly/embed.js" async></script>
-              """
+        'chart_link': "https://plot.ly/~chris/1638"
     }
 ]
 
@@ -51,11 +39,17 @@ def about():
 #         return redirect(url_for('home'))
 #     return render_template('register.html', title='Register', form=form)
 
-@app.route('/view/')
-def view_gantt():
+@app.route('/view/<project_name>')
+def view_gantt(project_name):
     p = compile(r'height="[\d]*"')
-    chart = p.sub('height=600', get_embed("https://plot.ly/~fenchelfen/0"))
-    return render_template('view_gantt.html', title='Gantt Chart', chart=chart, places=False)
+    filtered_projects = list(filter(lambda x: x['name'] == project_name, projects))
+    if filtered_projects:
+        project = filtered_projects[0]
+        chart = p.sub('height=600', get_embed(project['chart_link']))
+        return render_template('view_gantt.html', title=project['name'], chart=chart, places=False)
+    else:
+        flash("Failed to find '%s'" % project_name, 'danger')
+        return redirect(url_for('home'))
 
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -67,4 +61,4 @@ def login():
             return redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
-    return render_template('login.html', title='Login', form=form)
+    return render_template('login.html', title='Login', form=form, places=True)

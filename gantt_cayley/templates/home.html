@@ -12,16 +12,16 @@
                         </div>
                         <div class="">
                             <div class="article-text">
-                                <a class="article-title" href="#">{{ project.description }}</a></h3>
+                                <a class="article-title" href="#">{{ project.description }}</a>
                             </div>
-                            <button class="btn btn-outline-info mt-2" onclick="window.location.href='{{ url_for('view_gantt') }}'">
+                            <button class="btn btn-outline-info mt-2" onclick="window.location.href='{{ url_for('view_gantt', project_name=project.name) }}'">
                                 View Chart
                             </button>
                         </div>
                     </div>
                     <div class="col-sm border mt-1">
                         <img style="max-width: 312px; max-height: 312px; text-align: center; display: block;
-                                    margin-left: auto; margin-right: auto" src="https://plot.ly/~fenchelfen/0.png" alt="gantt-simple-gantt-chart"
+                                    margin-left: auto; margin-right: auto" src="{{ project.chart_link }}.png" src="https://plot.ly/~fenchelfen/0.png" alt="gantt-simple-gantt-chart"
                              onerror="this.onerror=null;this.src='https://plot.ly/404.png';" />
                     </div>
                 </div>
