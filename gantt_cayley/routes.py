@@ -2,7 +2,7 @@ from flask import render_template, url_for, flash, redirect
 from .forms import RegistrationForm, LoginForm
 from plotly.tools import get_embed
 from re import compile
-from gantt_cayley import app
+from gantt_cayley import app, bcrypt, login_manager
 
 projects = [
     {
@@ -20,6 +20,10 @@ projects = [
 ]
 
 
+# @login_manager.user_loader
+# def load_user(user_id):
+#     return db.get_user(user_id)
+
 @app.route('/')
 @app.route('/home/')
 def home():
@@ -31,13 +35,18 @@ def about():
     return render_template('about.html', title='About', places=True)
 
 
-# @app.route('/register/', methods=['GET', 'POST'])
-# def register():
-#     form = RegistrationForm()
-#     if form.validate_on_submit():
-#         flash(f'Account created for {form.username.data}!', 'success')
-#         return redirect(url_for('home'))
-#     return render_template('register.html', title='Register', form=form)
+@app.route('/register/', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        # Create a new user instance
+        # db.session.add(user)
+        # db.session.commit()
+        flash('You account has been created! Please, log in', 'success')
+        return redirect(url_for('home'))
+    return render_template('register.html', title='Register', form=form, places=True)
+
 
 @app.route('/view/<project_name>')
 def view_gantt(project_name):
