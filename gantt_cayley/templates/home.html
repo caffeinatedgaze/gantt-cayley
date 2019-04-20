@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h1 class="border-bottom mb-3">Your Projects</h1>
+    {% for project in projects %}
+        <article class="media content-section">
+            <div class="container media-body">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="article-metadata">
+                            <h4><a class="mr-2" href="#">{{ project.name }}</a></h4>
+                        </div>
+                        <div class="">
+                            <div class="article-text">
+                                <a class="article-title" href="#">{{ project.description }}</a></h3>
+                            </div>
+                            <button class="btn btn-outline-info mt-2" onclick="window.location.href='{{ url_for('view_gantt') }}'">
+                                View Chart
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-sm border mt-1">
+                        <img style="max-width: 312px; max-height: 312px; text-align: center; display: block;
+                                    margin-left: auto; margin-right: auto" src="https://plot.ly/~fenchelfen/0.png" alt="gantt-simple-gantt-chart"
+                             onerror="this.onerror=null;this.src='https://plot.ly/404.png';" />
+                    </div>
+                </div>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

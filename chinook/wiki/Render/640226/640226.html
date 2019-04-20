@@ -1,17 +1,0 @@
-<div class="wikidoc"><h1>Generating SQL scripts for the Chinook Database</h1><h2>Required Tools</h2><ul><li>Microsoft Visual Studio 2012</li></ul>
-<h2>Database Servers</h2><ul><li>SQL Server Express (already installed with Visual Studio).</li>
-<li><a href="http://www.oracle.com/technetwork/products/express-edition/overview/index.html">Oracle Database 11g Express Edition (XE)</a>.</li>
-<li><a href="http://www.mysql.com/downloads/mysql/">MySQL 5.5 Community Server</a>: Choose all default settings when installing, but on the MySQL Server Instance installer make sure to select:
-<ul><li>Best Support For Multilingualism</li>
-<li>Include Bin Directory in Windows PATH</li></ul></li>
-<li>Download the latest source code from <a href="http://www.codeplex.com/ChinookDatabase/SourceControl/ListDownloadableCommits.aspx">here.</a></li>
-<li>Open the Solution file <b>ChinookDatabase.sln</b> in Visual Studio.</li>
-<li>If you want to use the data from your own iTunes library, then replace the file <b>ChinookDatabase\DataSources\_Xml\Source\iTunes Music Library.xml</b> with your version.
-<ul><li>In <b>app.config</b>, verify that the connection strings are matching any changes you made to username/password above. Also, the Oracle connection string uses the Express Edition, e.g. <b>Data Source=xe</b>. So, change it if you are using a different Oracle edition.</li></ul></li>
-<li>On the Solution Explorer, click on your Solution and then click on the <b>Transform All Templates</b> button at the Solution Explorer buttons bar.</li>
-<li>Rebuild the solution.</li>
-<li>Verify that your database servers are properly set:
-<ul><li>The batch file <b>DataSources\CreateMySql.bat</b> uses the <b>root</b> user with the password <b>p4ssw0rd</b>. </li>
-<li>The generated Oracle SQL script creates a new user <b>chinook</b>, with the password <b>p4ssw0rd</b>. You might want to change this to use a different user/password.</li></ul></li>
-<li>Create the database using the appropriate scripts.</li>
-<li>Run the database tests in ChinookDatabase.Test to make sure your database was created properly.</li></ul></div><div class="ClearBoth"></div>
