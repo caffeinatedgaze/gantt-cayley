@@ -1,0 +1,29 @@
+user/1 username FatherOfGods USER .
+user/1 password OdinDumb  .
+user/1 email horosho@byt.god  .
+user/1 in_group group/1  .
+user/1 in_group group/2 .
+
+user/2 username FatherOfFatherOfGods USER .
+user/2 password SomeDumb  .
+user/2 email horosho@byt.father  .
+user/2 in_group group/1 .
+
+
+user/3 username MotherOfSolidSnake USER .
+user/3 password Oops  .
+user/3 email my@son.clone  .
+
+user/4 username ff USER .
+user/4 password yoko .
+user/4 email ff@gantt.com .
+user/4 in_group group/1 .
+
+group/1 name TopCats GROUP .
+group/1 project project/1  .
+
+group/2 name TopDogs GROUP .
+ 
+
+project/1 name gantt PROJECT .
+project/1 description "best project in da world" .
