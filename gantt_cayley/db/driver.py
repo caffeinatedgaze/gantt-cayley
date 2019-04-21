@@ -1,7 +1,7 @@
 from pyley import CayleyClient, GraphObject
-import requests
 from models import *
-
+import requests
+import re
 class DatabaseDriver():
     
     types = {
@@ -37,9 +37,9 @@ class DatabaseDriver():
         objects = []
         for i in response:
             if not i['source_id'] in created_objects:
-                objects.append(self.types[label](i['source_id']))
+                objects.append(self.types[label](re.findall("\d+", i['source_id'])[0]))
                 created_objects.append(i['source_id'])
-            user = next((x for x in objects if x.id == i['source_id']), None)
+            user = next((x for x in objects if x.id == re.findall("\d+", i['source_id'])[0]), None)
             if type(getattr(user, i['pred'])) == type(set()):
                 getattr(user, i['pred']).add(i['id'])
             else: 
@@ -51,10 +51,12 @@ class DatabaseDriver():
 
         query = "g.V().LabelContext(\"%s\").In().Tag(\"source_id\").LabelContext(null) \
             .Out([], \"pred\").All()" % (label)  
-
-        response = self.client.Send(query).result["result"] 
-
-        return self._parse_object_response(response, label)
+        
+        try:
+            response = self.client.Send(query).result["result"] 
+            return self._parse_object_response(response, label)
+        except:
+            return None
 
     def _filter_by_parameter(self, parameter, value=None):
         if value is None:
@@ -62,9 +64,11 @@ class DatabaseDriver():
         else:
             query = self.g.V().Both(parameter).Is(*value).All()
 
-        response = self.client.Send(query).result["result"]
-        return set((i['id'] for i in response))
-    
+        try:
+            response = self.client.Send(query).result["result"]
+            return set((i['id'] for i in response))
+        except:
+            return None
 
     def filter_by(self, node_type, value=None):
 
@@ -76,7 +80,15 @@ class DatabaseDriver():
         else:
             result = self._filter_by_parameter(node_type, value)
         
-        return None or result
+        return result
 
 
-    
+driver = DatabaseDriver()
+
+# print(driver.client.Send(driver.g.V("email").Out().All()).result)
+
+# print(driver.get_user_by_username("FatherOfGods"))
+# print(driver.get_user_by_id(1))
+print(driver.filter_by("user")[0].username)
+print(driver.filter_by("email", value=["horosho@byt.father", "horosho@byt.god"]))
+print(driver.filter_by("password", ["OdinDumb"]))
