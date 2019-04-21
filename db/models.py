@@ -15,7 +15,7 @@ class User(UserMixin):
         self.username = username
         self.password = password
         self.email = email
-        self.in_group = set() if group is None else group
+        self.in_group = [] if group is None else group
 
     def add_to_group(self, group):
         self.in_group = group
@@ -26,10 +26,10 @@ class Group:
     def __init__(self, group_id, name=None, projects=None):
         self.id = group_id
         self.name = name
-        self.projects = set() if projects is None else projects
+        self.project = [] if projects is None else projects
 
     def add_project(self, project):
-        self.projects.append(project)
+        self.project.append(project)
 
 
 class Project:
@@ -39,10 +39,10 @@ class Project:
         self.name = name
         self.description = description
         self.chart_link = chart_link
-        self.tasks = set() if tasks is None else tasks
+        self.task = [] if tasks is None else tasks
 
     def add_task(self, task):
-        self.tasks.append(task)
+        self.task.append(task)
 
 
 class Task:
@@ -53,7 +53,7 @@ class Task:
         self.description = description
         self.start_date = start_date
         self.end_date = end_date
-        self.assignees = set() if assignees is None else assignees
+        self.assignee = [] if assignees is None else assignees
 
     def add_assignee(self, assignee):
-        self.assignees.append(assignee)
+        self.assignee.append(assignee)

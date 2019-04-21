@@ -3,7 +3,6 @@ from .models import User, Group, Task, Project
 import requests
 import re
 
-
 class DatabaseDriver():
     types = {
         "USER": User,
@@ -39,6 +38,42 @@ class DatabaseDriver():
         except:
             return None
 
+    def _update_attr(self, obj, dict):
+        if type(getattr(obj, dict['pred'])) == type([]):
+            if not re.findall("\d+", dict['id'])[0] in getattr(obj, dict['pred']):
+                getattr(obj, dict['pred']).append(re.findall("\d+", dict['id'])[0])
+        else:
+            setattr(obj, dict['pred'], dict['id'])
+
+    def get_object_by_id(self, object_type, object_id):
+
+        obj_id = object_type + "/" + object_id
+        return self._get_object_by_id(obj_id)
+
+    # object_id in form "type/id"
+    def _get_object_by_id(self, object_id):
+        pattern = re.findall(re.compile("[a-z]+"), object_id)
+        if len(pattern) != 1:
+            return None
+        label = pattern[0].upper()
+        
+        if label in self.types:
+            query = self.g.V(object_id).Out(tags="pred").All()
+
+            try:
+                response = self.client.Send(query).result["result"]
+                
+                new_object = self.types[label](re.findall("\d+", object_id)[0])
+                
+                for i in response:
+                    self._update_attr(new_object, i)
+            except: 
+                return None
+
+            return new_object
+
+        return None
+
     def _parse_object_response(self, response, label):
         created_objects = []
         objects = []
@@ -46,11 +81,8 @@ class DatabaseDriver():
             if not i['source_id'] in created_objects:
                 objects.append(self.types[label](re.findall("\d+", i['source_id'])[0]))
                 created_objects.append(i['source_id'])
-            user = next((x for x in objects if x.id == re.findall("\d+", i['source_id'])[0]), None)
-            if type(getattr(user, i['pred'])) == type(set()):
-                getattr(user, i['pred']).add(i['id'])
-            else:
-                setattr(user, i['pred'], i['id'])
+            next_object = next((x for x in objects if x.id == re.findall("\d+", i['source_id'])[0]), None)
+            self._update_attr(next_object, i)
 
         return objects
 
@@ -63,7 +95,7 @@ class DatabaseDriver():
             response = self.client.Send(query).result["result"]
             return self._parse_object_response(response, label)
         except:
-            return None
+            return []
 
     def _filter_by_parameter(self, parameter, value=None):
         if value is None:
@@ -75,7 +107,7 @@ class DatabaseDriver():
             response = self.client.Send(query).result["result"]
             return list(set((i['id'] for i in response)))
         except:
-            return None
+            return []
 
     def filter_by(self, node_type, value=None):
 
