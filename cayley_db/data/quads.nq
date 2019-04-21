@@ -15,7 +15,7 @@ user/3 password Oops  .
 user/3 email my@son.clone  .
 
 user/4 username ff USER .
-user/4 password yoko .
+user/4 password "$2b$12$YPTuKpeQXIC516jr8UQZqOTkBdM28Bgprz.nRw0EYv27BpC4fze6." .
 user/4 email ff@gantt.com .
 user/4 in_group group/1 .
 

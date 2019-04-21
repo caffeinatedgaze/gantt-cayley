@@ -1,8 +1,10 @@
 from flask import render_template, url_for, flash, redirect
 from .forms import RegistrationForm, LoginForm
-from plotly.tools import get_embed
-from re import compile
 from gantt_cayley import app, bcrypt
+from plotly.tools import get_embed
+from flask_login import login_user
+from re import compile
+from db import driver
 
 projects = [
     {
@@ -61,9 +63,10 @@ def view_gantt(project_name):
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        if form.email.data == 'admin@gantt.com' and form.password.data == 'pass':
+        user = driver.get_users('email', form.email.data)
+        if user and bcrypt.check_password_hash(user[0].password, form.password.data):
+            login_user(user[0], remember=form.remember)
             flash('You have been logged in!', 'success')
             return redirect(url_for('home'))
-        else:
-            flash('Login Unsuccessful. Please check email and password', 'danger')
+        flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form, places=True)

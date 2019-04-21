@@ -1,5 +1,5 @@
 from pyley import CayleyClient, GraphObject
-from .models import *
+from .models import User, Group, Task, Project
 import requests
 import re
 
@@ -18,7 +18,6 @@ class DatabaseDriver():
         type(Project): "PROJECT",
         type(Task): "TASK"
     }
-
 
     def __init__(self, address=""):
 
@@ -90,7 +89,6 @@ class DatabaseDriver():
 
         return result
 
-    def get_user(self, relation, value):
+    def get_users(self, relation, value):
         result = self._filter_by_label('USER')
         return [x for x in result if getattr(x, relation) == value]
-
