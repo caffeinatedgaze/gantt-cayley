@@ -3,6 +3,7 @@ from .forms import RegistrationForm, LoginForm
 from plotly.tools import get_embed
 from re import compile
 from gantt_cayley import app, bcrypt, login_manager
+from db import driver
 
 projects = [
     {
@@ -43,7 +44,7 @@ def register():
         # Create a new user instance
         # db.session.add(user)
         # db.session.commit()
-        flash('You account has been created! Please, log in', 'success')
+        flash('You account has been created! Try to login', 'success')
         return redirect(url_for('home'))
     return render_template('register.html', title='Register', form=form, places=True)
 
