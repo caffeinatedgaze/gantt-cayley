@@ -16,10 +16,21 @@ class DatabaseDriver():
         self.client = CayleyClient()
         self.g = GraphObject()
 
-    def get_user_by_id(self, id):
-        query = self.g.V("user:"+str(id)).Out(["username", "password", "email", "in_group"], "pred").All()
-        response = self.client.Send(query)
-        return response.result["result"]
+    def get_user_by_id(self, user_id):
+        query = self.g.V("user/"+str(user_id)).Out(["username", "password", "email", "in_group"], "pred").All()
+
+        try:
+            response = self.client.Send(query).result["result"]
+            user = User(user_id)
+
+            for i in response:
+                setattr(user, i['pred'], i['id'])
+
+            return user
+
+        except: 
+            return None
+        
 
     def _parse_object_response(self, response, label):
         created_objects = []
@@ -67,3 +78,5 @@ class DatabaseDriver():
         
         return None or result
 
+
+    
