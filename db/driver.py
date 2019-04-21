@@ -90,3 +90,7 @@ class DatabaseDriver():
 
         return result
 
+    def get_user(self, relation, value):
+        result = self._filter_by_label('USER')
+        return [x for x in result if getattr(x, relation) == value]
+
