@@ -12,6 +12,14 @@ class DatabaseDriver():
         "TASK": Task
     }
 
+    labels = {
+        type(User): "USER",
+        type(Group): "GROUP",
+        type(Project): "PROJECT",
+        type(Task): "TASK"
+    }
+
+
     def __init__(self, address=""):
 
         self.client = CayleyClient()
@@ -66,7 +74,7 @@ class DatabaseDriver():
 
         try:
             response = self.client.Send(query).result["result"]
-            return set((i['id'] for i in response))
+            return list(set((i['id'] for i in response)))
         except:
             return None
 
@@ -81,3 +89,4 @@ class DatabaseDriver():
             result = self._filter_by_parameter(node_type, value)
 
         return result
+
