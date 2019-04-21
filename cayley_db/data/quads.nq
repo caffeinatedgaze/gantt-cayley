@@ -21,6 +21,7 @@ user/4 in_group group/1 .
 
 group/1 name TopCats GROUP .
 group/1 project project/1  .
+group/1 project project/2  .
 
 group/2 name TopDogs GROUP .
  

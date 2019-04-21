@@ -1,5 +1,5 @@
 from flask_login import login_user, current_user, logout_user, login_required
-from flask import render_template, url_for, flash, redirect
+from flask import render_template, url_for, flash, redirect, request
 from .forms import RegistrationForm, LoginForm
 from gantt_cayley import app, bcrypt
 from plotly.tools import get_embed
@@ -25,6 +25,7 @@ projects = [
 @app.route('/')
 def root():
     return render_template('root.html', title='home')
+
 
 @app.route('/home/')
 @login_required
@@ -57,6 +58,7 @@ def register():
 def view_gantt(project_name):
     p = compile(r'height="[\d]*"')
     filtered_projects = list(filter(lambda x: x['name'] == project_name, projects))
+    # projects = driver.filter_by()
     if filtered_projects:
         project = filtered_projects[0]
         chart = p.sub('height=600', get_embed(project['chart_link']))
@@ -72,11 +74,12 @@ def login():
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = driver.get_users('email', form.email.data)
+        user = driver.get_quads(label='USER', relation='email', value=form.email.data)
         if user and bcrypt.check_password_hash(user[0].password, form.password.data):
             login_user(user[0], remember=form.remember)
+            next_page = request.args.get('next')
             flash('You have been logged in!', 'success')
-            return redirect(url_for('home'))
+            return redirect(next_page) if next_page else redirect(url_for('home'))
         flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form, places=True)
 

@@ -38,6 +38,21 @@ class DatabaseDriver():
         except:
             return None
 
+    def get_group_by_id(self, group_id):
+        query = self.g.V("user/" + str(group_id)).Out(["name", "project"], "pred").All()
+
+        try:
+            response = self.client.Send(query).result["result"]
+            user = User(group_id)
+
+            for i in response:
+                setattr(user, i['pred'], i['id'])
+
+            return user
+
+        except:
+            return None
+
     def _update_attr(self, obj, dict):
         if type(getattr(obj, dict['pred'])) == type([]):
             if not re.findall("\d+", dict['id'])[0] in getattr(obj, dict['pred']):
@@ -47,7 +62,7 @@ class DatabaseDriver():
 
     def get_object_by_id(self, object_type, object_id):
 
-        obj_id = object_type + "/" + object_id
+        obj_id = object_type.lower() + "/" + object_id
         return self._get_object_by_id(obj_id)
 
     # object_id in form "type/id"
@@ -121,6 +136,6 @@ class DatabaseDriver():
 
         return result
 
-    def get_users(self, relation, value):
-        result = self._filter_by_label('USER')
+    def get_quads(self, label, relation, value):
+        result = self._filter_by_label(label)
         return [x for x in result if getattr(x, relation) == value]
