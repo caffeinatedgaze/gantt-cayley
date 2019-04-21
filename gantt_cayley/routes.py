@@ -1,8 +1,8 @@
+from flask_login import login_user, current_user, logout_user, login_required
 from flask import render_template, url_for, flash, redirect
 from .forms import RegistrationForm, LoginForm
 from gantt_cayley import app, bcrypt
 from plotly.tools import get_embed
-from flask_login import login_user
 from re import compile
 from db import driver
 
@@ -23,7 +23,11 @@ projects = [
 
 
 @app.route('/')
+def root():
+    return render_template('root.html', title='home')
+
 @app.route('/home/')
+@login_required
 def home():
     return render_template('home.html', title='Home', projects=projects, places=True)
 
@@ -35,6 +39,8 @@ def about():
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -47,6 +53,7 @@ def register():
 
 
 @app.route('/view/<project_name>')
+@login_required
 def view_gantt(project_name):
     p = compile(r'height="[\d]*"')
     filtered_projects = list(filter(lambda x: x['name'] == project_name, projects))
@@ -61,6 +68,8 @@ def view_gantt(project_name):
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
         user = driver.get_users('email', form.email.data)
@@ -70,3 +79,9 @@ def login():
             return redirect(url_for('home'))
         flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form, places=True)
+
+
+@app.route('/logout/')
+def logout():
+    logout_user()
+    return redirect(url_for('root'))
