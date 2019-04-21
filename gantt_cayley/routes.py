@@ -2,8 +2,7 @@ from flask import render_template, url_for, flash, redirect
 from .forms import RegistrationForm, LoginForm
 from plotly.tools import get_embed
 from re import compile
-from gantt_cayley import app, bcrypt, login_manager
-from db import driver
+from gantt_cayley import app, bcrypt
 
 projects = [
     {
@@ -20,10 +19,6 @@ projects = [
     }
 ]
 
-
-# @login_manager.user_loader
-# def load_user(user_id):
-#     return db.get_user(user_id)
 
 @app.route('/')
 @app.route('/home/')

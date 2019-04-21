@@ -1,4 +1,14 @@
-class User:
+from gantt_cayley import login_manager
+from flask_login import UserMixin
+from db import driver
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return driver.get_user_by_id(user_id)
+
+
+class User(UserMixin):
 
     def __init__(self, user_id, username=None, password=None, email=None, group=None):
         self.id = user_id
