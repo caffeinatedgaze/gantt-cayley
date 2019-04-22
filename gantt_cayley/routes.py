@@ -24,7 +24,7 @@ projects = [
 
 @app.route('/')
 def root():
-    return render_template('root.html', title='home')
+    return render_template('root.html', title='Feed')
 
 
 @app.route('/home/')
