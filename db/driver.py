@@ -26,24 +26,20 @@ class DatabaseDriver():
     def get_user_by_id(self, user_id):
         query = self.g.V("user/" + str(user_id)).Out(["username", "password", "email", "in_group"], "pred").All()
 
-        # try:
-        response = self.client.Send(query).result["result"]
-        user = User(user_id)
+        try:
+            response = self.client.Send(query).result["result"]
+            user = User(user_id)
+            for i in response:
+                if i['pred'] == 'in_group':
+                    id_parsed = int(i['id'].split('/')[1])
+                    setattr(user, i['pred'], getattr(user, i['pred']) + [id_parsed])
+                else:
+                    setattr(user, i['pred'], i['id'])
 
-        # print(response)
+            return user
 
-        for i in response:
-            if i['pred'] == 'in_group':
-                setattr(user, i['pred'], getattr(user, i['pred']) + list(i['id'].split('/')[1]))
-            else:
-                setattr(user, i['pred'], i['id'])
-
-        # print(user.in_group)
-
-        return user
-
-        # except:
-        #     return None
+        except:
+            return None
 
     def get_group_by_id(self, group_id):
         query = self.g.V("user/" + str(group_id)).Out(["name", "project"], "pred").All()

@@ -9,8 +9,8 @@ from db import driver
 #     print(driver.get_object_by_id(object_type='USER', object_id=i).in_group)
 
 
-user = driver.get_user_by_id(4)
-print(user.in_group)
+# user = driver.get_user_by_id(4)
+# print(user.in_group)
 
-# if __name__ == "__main__":
-#     app.run(debug=True, host='0.0.0.0')
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0')

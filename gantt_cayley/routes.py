@@ -30,10 +30,12 @@ def root():
 @app.route('/home/')
 @login_required
 def home():
-    print(current_user.in_group)
+    projects = [driver.get_object_by_id('PROJECT', x)
+                for x in driver.get_object_by_id('GROUP', current_user.in_group[0]).project]
+    print(projects)
     if current_user.in_group:
         return render_template('home.html', title='Home',
-                               projects=driver.get_object_by_id(object_type='GROUP', object_id=current_user.in_group[0]),
+                               projects=projects,
                                places=True)
     else:
         return redirect(url_for('about'))
@@ -59,17 +61,17 @@ def register():
     return render_template('register.html', title='Register', form=form, places=True)
 
 
-@app.route('/view/<project_name>')
+@app.route('/view/<project_id>')
 @login_required
-def view_gantt(project_name):
+def view_gantt(project_id):
     p = compile(r'height="[\d]*"')
-    filtered_projects = list(filter(lambda x: x['name'] == project_name, projects))
-    if filtered_projects:
-        project = filtered_projects[0]
-        chart = p.sub('height=600', get_embed(project['chart_link']))
-        return render_template('view_gantt.html', title=project['name'], chart=chart, places=False)
+    # filtered_projects = list(filter(lambda x: x['name'] == project_name, projects))
+    project = driver.get_object_by_id('PROJECT', project_id)
+    if project:
+        chart = p.sub('height=600', get_embed(project.chart_link))
+        return render_template('view_gantt.html', title=project.name, chart=chart, places=False)
     else:
-        flash("Failed to find '%s'" % project_name, 'danger')
+        flash("Failed to find '%s'" % project.name, 'danger')
         return redirect(url_for('home'))
 
 
