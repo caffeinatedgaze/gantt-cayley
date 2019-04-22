@@ -1,5 +1,5 @@
 from flask_login import login_user, current_user, logout_user, login_required
-from flask import render_template, url_for, flash, redirect
+from flask import render_template, url_for, flash, redirect, request
 from .forms import RegistrationForm, LoginForm
 from gantt_cayley import app, bcrypt
 from plotly.tools import get_embed
@@ -24,12 +24,20 @@ projects = [
 
 @app.route('/')
 def root():
-    return render_template('root.html', title='home')
+    return render_template('root.html', title='Feed')
+
 
 @app.route('/home/')
 @login_required
 def home():
-    return render_template('home.html', title='Home', projects=projects, places=True)
+    projects = [driver.get_object_by_id('PROJECT', x)
+                for x in driver.get_object_by_id('GROUP', current_user.in_group[0]).project]
+    if current_user.in_group:
+        return render_template('home.html', title='Home',
+                               projects=projects,
+                               places=True)
+    else:
+        return redirect(url_for('about'))
 
 
 @app.route('/about/')
@@ -47,22 +55,21 @@ def register():
         # Create a new user instance
         # db.session.add(user)
         # db.session.commit()
-        flash('You account has been created! Try to login', 'success')
+        flash('Your account has been created! Try to login', 'success')
         return redirect(url_for('home'))
     return render_template('register.html', title='Register', form=form, places=True)
 
 
-@app.route('/view/<project_name>')
+@app.route('/view/<project_id>')
 @login_required
-def view_gantt(project_name):
+def view_gantt(project_id):
     p = compile(r'height="[\d]*"')
-    filtered_projects = list(filter(lambda x: x['name'] == project_name, projects))
-    if filtered_projects:
-        project = filtered_projects[0]
-        chart = p.sub('height=600', get_embed(project['chart_link']))
-        return render_template('view_gantt.html', title=project['name'], chart=chart, places=False)
+    project = driver.get_object_by_id('PROJECT', project_id)
+    if project:
+        chart = p.sub('height=600', get_embed(project.chart_link))
+        return render_template('view_gantt.html', title=project.name, chart=chart, places=False)
     else:
-        flash("Failed to find '%s'" % project_name, 'danger')
+        flash("Failed to find '%s'" % project.name, 'danger')
         return redirect(url_for('home'))
 
 
@@ -72,11 +79,12 @@ def login():
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = driver.get_users('email', form.email.data)
+        user = driver.get_quads(label='USER', relation='email', value=form.email.data)
         if user and bcrypt.check_password_hash(user[0].password, form.password.data):
             login_user(user[0], remember=form.remember)
+            next_page = request.args.get('next')
             flash('You have been logged in!', 'success')
-            return redirect(url_for('home'))
+            return redirect(next_page) if next_page else redirect(url_for('home'))
         flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form, places=True)
 

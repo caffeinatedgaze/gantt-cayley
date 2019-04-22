@@ -29,6 +29,24 @@ class DatabaseDriver():
         try:
             response = self.client.Send(query).result["result"]
             user = User(user_id)
+            for i in response:
+                if i['pred'] == 'in_group':
+                    id_parsed = int(i['id'].split('/')[1])
+                    setattr(user, i['pred'], getattr(user, i['pred']) + [id_parsed])
+                else:
+                    setattr(user, i['pred'], i['id'])
+
+            return user
+
+        except:
+            return None
+
+    def get_group_by_id(self, group_id):
+        query = self.g.V("user/" + str(group_id)).Out(["name", "project"], "pred").All()
+
+        try:
+            response = self.client.Send(query).result["result"]
+            user = User(group_id)
 
             for i in response:
                 setattr(user, i['pred'], i['id'])
@@ -47,11 +65,12 @@ class DatabaseDriver():
 
     def get_object_by_id(self, object_type, object_id):
 
-        obj_id = object_type + "/" + object_id
+        obj_id = object_type.lower() + "/" + str(object_id)
         return self._get_object_by_id(obj_id)
 
     # object_id in form "type/id"
     def _get_object_by_id(self, object_id):
+        pattern = re.findall(re.compile("[a-z]+"), object_id)
         pattern = re.findall(re.compile("[a-z]+"), object_id)
         if len(pattern) != 1:
             return None
@@ -121,8 +140,8 @@ class DatabaseDriver():
 
         return result
 
-    def get_users(self, relation, value):
-        result = self._filter_by_label('USER')
+    def get_quads(self, label, relation, value):
+        result = self._filter_by_label(label)
         return [x for x in result if getattr(x, relation) == value]
 
     def _get_last_id_from_db(self, label):
