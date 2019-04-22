@@ -32,7 +32,6 @@ def root():
 def home():
     projects = [driver.get_object_by_id('PROJECT', x)
                 for x in driver.get_object_by_id('GROUP', current_user.in_group[0]).project]
-    print(projects)
     if current_user.in_group:
         return render_template('home.html', title='Home',
                                projects=projects,
@@ -56,7 +55,7 @@ def register():
         # Create a new user instance
         # db.session.add(user)
         # db.session.commit()
-        flash('You account has been created! Try to login', 'success')
+        flash('Your account has been created! Try to login', 'success')
         return redirect(url_for('home'))
     return render_template('register.html', title='Register', form=form, places=True)
 
@@ -65,7 +64,6 @@ def register():
 @login_required
 def view_gantt(project_id):
     p = compile(r'height="[\d]*"')
-    # filtered_projects = list(filter(lambda x: x['name'] == project_name, projects))
     project = driver.get_object_by_id('PROJECT', project_id)
     if project:
         chart = p.sub('height=600', get_embed(project.chart_link))
