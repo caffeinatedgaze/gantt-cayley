@@ -26,17 +26,24 @@ class DatabaseDriver():
     def get_user_by_id(self, user_id):
         query = self.g.V("user/" + str(user_id)).Out(["username", "password", "email", "in_group"], "pred").All()
 
-        try:
-            response = self.client.Send(query).result["result"]
-            user = User(user_id)
+        # try:
+        response = self.client.Send(query).result["result"]
+        user = User(user_id)
 
-            for i in response:
+        # print(response)
+
+        for i in response:
+            if i['pred'] == 'in_group':
+                setattr(user, i['pred'], getattr(user, i['pred']) + list(i['id'].split('/')[1]))
+            else:
                 setattr(user, i['pred'], i['id'])
 
-            return user
+        # print(user.in_group)
 
-        except:
-            return None
+        return user
+
+        # except:
+        #     return None
 
     def get_group_by_id(self, group_id):
         query = self.g.V("user/" + str(group_id)).Out(["name", "project"], "pred").All()
@@ -62,11 +69,12 @@ class DatabaseDriver():
 
     def get_object_by_id(self, object_type, object_id):
 
-        obj_id = object_type.lower() + "/" + object_id
+        obj_id = object_type.lower() + "/" + str(object_id)
         return self._get_object_by_id(obj_id)
 
     # object_id in form "type/id"
     def _get_object_by_id(self, object_id):
+        pattern = re.findall(re.compile("[a-z]+"), object_id)
         pattern = re.findall(re.compile("[a-z]+"), object_id)
         if len(pattern) != 1:
             return None

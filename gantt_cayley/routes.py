@@ -30,7 +30,13 @@ def root():
 @app.route('/home/')
 @login_required
 def home():
-    return render_template('home.html', title='Home', projects=projects, places=True)
+    print(current_user.in_group)
+    if current_user.in_group:
+        return render_template('home.html', title='Home',
+                               projects=driver.get_object_by_id(object_type='GROUP', object_id=current_user.in_group[0]),
+                               places=True)
+    else:
+        return redirect(url_for('about'))
 
 
 @app.route('/about/')
@@ -58,7 +64,6 @@ def register():
 def view_gantt(project_name):
     p = compile(r'height="[\d]*"')
     filtered_projects = list(filter(lambda x: x['name'] == project_name, projects))
-    # projects = driver.filter_by()
     if filtered_projects:
         project = filtered_projects[0]
         chart = p.sub('height=600', get_embed(project['chart_link']))

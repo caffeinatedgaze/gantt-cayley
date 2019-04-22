@@ -1,5 +1,5 @@
 user/1 username FatherOfGods USER .
-user/1 password OdinDumb  .
+user/1 password "$2b$12$YPTuKpeQXIC516jr8UQZqOTkBdM28Bgprz.nRw0EYv27BpC4fze6." .
 user/1 email horosho@byt.god  .
 user/1 in_group group/1  .
 user/1 in_group group/2 .
