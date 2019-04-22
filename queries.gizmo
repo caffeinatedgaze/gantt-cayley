@@ -1,0 +1,54 @@
+/*
+ * Create clusters of people working on the same projects
+ */
+
+user_to_project = graph.Morphism()
+                       .Out('in_group')
+                       .Out('project')
+graph.V().As('root')
+	 .Out('username').As('source')
+	 .Back('root')
+     .Follow(user_to_project)
+     .Out('name').As('target').All()
+
+/*
+ * Create clusters of projects and people working on them (looks the same)
+ */
+
+user_to_project = graph.Morphism()
+                       .Out('in_group')
+                       .Out('project')
+graph.V().As('root')
+	 .Out('name').As('source')
+	 .Back('root')
+     .FollowR(user_to_project)
+     .Out('username').As('target').All()
+
+/*
+ * We can also count our vertices, that's a lot!
+ */
+
+user_to_project = graph.Morphism()
+                       .Out('in_group')
+                       .Out('project')
+g.Emit(graph.V().As('root')
+	 .Out('name').As('source')
+	 .Back('root')
+     .FollowR(user_to_project)
+     .Out('username').As('target').Count())
+
+/*
+ * List all users, show their count
+ */
+
+
+graph.V().LabelContext('USER').Tag('source').Out('in_group').Tag('target').All()
+
+
+
+user_to_task = graph.V()
+    		    .Out('in_group')
+		    .Out('project')
+		    .Out('task')
+
+graph.V().As('source').Follow(user_to_task).As('target').All()
