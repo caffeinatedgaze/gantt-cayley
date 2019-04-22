@@ -101,6 +101,7 @@ class Generator:
         self.groups = []
         self.projects = []
         self.tasks = []
+        print(f'Usernames in total = {len(usernames)}')
         for i in range(int(len(usernames) * Generator.prop_users)):
             group_id = i // self.group_amount
             name = usernames[i]
@@ -149,7 +150,7 @@ class Generator:
         for project in self.projects:
             line = "project/{} name {} {} .\n".format(project.id, project.name, project.label)
             f.write(line)
-            line = "project/{} description '{}' {} .\n".format(project.id, project.description, project.label)
+            line = "project/{} description \"{}\" {} .\n".format(project.id, project.description, project.label)
             f.write(line)
             for task in project.tasks:
                 line = "project/{} task task/{} {} .\n".format(project.id, task.id, project.label)
@@ -161,7 +162,7 @@ class Generator:
         for task in self.tasks:
             line = "task/{} title {} {} .\n".format(task.id, task.title, task.label)
             f.write(line)
-            line = "task/{} description '{}' {} .\n".format(task.id, task.description, task.label)
+            line = "task/{} description \"{}\" {} .\n".format(task.id, task.description, task.label)
             f.write(line)
             line = "task/{} start_date {} {} .\n".format(task.id, task.start, task.label)
             f.write(line)
