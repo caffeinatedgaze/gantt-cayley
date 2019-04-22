@@ -12,15 +12,15 @@ class DatabaseDriver():
     }
 
     labels = {
-        type(User): "USER",
-        type(Group): "GROUP",
-        type(Project): "PROJECT",
-        type(Task): "TASK"
+        type(User()): "USER",
+        type(Group()): "GROUP",
+        type(Project()): "PROJECT",
+        type(Task()): "TASK"
     }
 
     def __init__(self, address=""):
 
-        self.client = CayleyClient()
+        self.client = CayleyClient() if address == "" else CayleyClient(address)
         self.g = GraphObject()
 
     def get_user_by_id(self, user_id):
@@ -124,3 +124,99 @@ class DatabaseDriver():
     def get_users(self, relation, value):
         result = self._filter_by_label('USER')
         return [x for x in result if getattr(x, relation) == value]
+
+    def _get_last_id_from_db(self, label):
+        query = self.g.V(label).Out("last_id").All()
+        response = self.client.Send(query).result['result']
+        return int(response[0]['id']) if response != None else 0
+
+    def _generate_new_id(self, label, type_):
+        
+        last_from_db = self._get_last_id_from_db(label)
+
+        if last_from_db == 0:
+            new_id = 1
+        else: 
+            new_id = last_from_db + 1
+            self.client.DeleteQuad(label, "last_id", str(last_from_db))
+
+        while True:
+            query = self.g.V(type_+"/"+str(new_id)).All()
+            response = self.client.Send(query).result['result']
+            if response == None:
+                break
+            new_id += 1
+         
+        self.client.AddQuad(label, "last_id", str(new_id))
+
+        return new_id
+
+    # action should be "add" or "delete"
+    def _generate_quads(self, object_, action, last_used_id = 0):
+        attrs = object_.__dict__.items()
+
+        quads = []
+
+        object_id = last_used_id
+
+        if type(object_) in self.labels:
+            label = self.labels[type(object_)]
+            type_ = label.lower()
+
+            if action == "add":
+                object_id = self._generate_new_id(label, type_)
+            elif action == "delete":
+                object_id = getattr(object_, "id")
+            else: 
+                return []
+
+            str_id = type_+"/"+str(object_id)
+        
+            for key, value in attrs:
+                if key != "id" and value != None and value != []:
+                    quad = (str_id, key, value, label)
+                    quads.append(quad)
+
+        return quads
+
+    def add_object(self, object_):
+        self.add_objects(self, [object_])
+
+    def add_objects(self, objects): 
+        quads = []
+        for obj in objects:
+            quads += self._generate_quads(obj, "add")
+
+        self.client.AddQuads(quads)
+
+    def edit(self, old_object, new_object):
+        old = self._generate_quads(old_object, "delete")
+        new = self._generate_quads(new_object, "delete")
+
+        self.client.DeleteQuads(old).result['result']
+        self.client.AddQuads(new)
+
+    def _update_last_used_id(self, quads):
+        checked = []
+        for q in quads:
+            if not q[0] in checked:
+                checked.append(q[0])
+                type_ = re.findall(re.compile("[a-z]+"), q[0])[0]
+                id_ = int(re.findall(re.compile("\d+"), q[0])[0])
+                label = type_.upper()
+                last_id = self._get_last_id_from_db(label)
+                if id_ < last_id:
+                    self.client.DeleteQuad(label, "last_id", str(last_id))
+                    self.client.AddQuad(label, "last_id", str(id_))               
+                                
+    def delete_object(self, object_):
+        self.delete_objects([object_])
+
+    def delete_objects(self, objects):
+        quads = []
+
+        for obj in objects:
+            quads += self._generate_quads(obj, "delete")
+        
+        self.client.DeleteQuads(quads)
+        self._update_last_used_id(quads)

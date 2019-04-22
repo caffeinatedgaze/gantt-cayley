@@ -10,7 +10,7 @@ def load_user(user_id):
 
 class User(UserMixin):
 
-    def __init__(self, user_id, username=None, password=None, email=None, group=None):
+    def __init__(self, user_id=None, username=None, password=None, email=None, group=None):
         self.id = user_id
         self.username = username
         self.password = password
@@ -23,7 +23,7 @@ class User(UserMixin):
 
 class Group:
 
-    def __init__(self, group_id, name=None, projects=None):
+    def __init__(self, group_id=None, name=None, projects=None):
         self.id = group_id
         self.name = name
         self.project = [] if projects is None else projects
@@ -34,7 +34,7 @@ class Group:
 
 class Project:
 
-    def __init__(self, project_id, name=None, description=None, chart_link=None, tasks=None):
+    def __init__(self, project_id=None, name=None, description=None, chart_link=None, tasks=None):
         self.id = project_id
         self.name = name
         self.description = description
@@ -47,7 +47,7 @@ class Project:
 
 class Task:
 
-    def __init__(self, task_id, title=None, description=None, start_date=None, end_date=None, assignees=None):
+    def __init__(self, task_id=None, title=None, description=None, start_date=None, end_date=None, assignees=None):
         self.id = task_id
         self.title = title
         self.description = description
