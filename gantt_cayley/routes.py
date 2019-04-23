@@ -102,7 +102,8 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         # print(len(driver.filter_by('USER')))
-        user = driver.get_quads(label='USER', relation='email', value=form.email.data)
+        # user = driver.get_quads(label='USER', relation='email', value=form.email.data)
+        user = driver.filter_by(type='USER', email='Lennox@gantt.com')
         # if user and bcrypt.check_password_hash(user[0].password, form.password.data):
         # yes, it's plaintext -- for the ease of using the generated dataset
         print(user, form.email.data, form.password.data)
