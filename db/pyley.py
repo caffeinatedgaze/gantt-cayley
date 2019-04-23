@@ -8,12 +8,12 @@ class CayleyResponse(object):
 
 
 class CayleyClient(object):
-    def __init__(self, url="http://localhost:64210", version="v1", limit=0):
+    def __init__(self, url="http://localhost:64210", version="v1", limit=-1):
         if limit == 0:
             self.url = "%s/api/%s/query/gizmo" % (url, version)
         else:
-            self.url = "%s/api/%s/query/gizmo?limit=%s" % (url, version,str(limit))        
-        
+            self.url = "%s/api/%s/query/gizmo?limit=%d" % (url, version, limit)        
+        print(self.url)
         self.write_url = "%s/api/%s/write" % (url, version)
         self.delete_url = "%s/api/%s/delete" % (url, version)
 

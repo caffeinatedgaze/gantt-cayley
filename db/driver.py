@@ -18,9 +18,9 @@ class DatabaseDriver():
         type(Task()): "TASK"
     }
 
-    def __init__(self, address=""):
+    def __init__(self, address="", limit=0):
 
-        self.client = CayleyClient() if address == "" else CayleyClient(address)
+        self.client = CayleyClient(limit=limit) if address == "" else CayleyClient(address, limit=limit)
         self.g = GraphObject()
 
     def get_user_by_id(self, user_id):
@@ -90,10 +90,27 @@ class DatabaseDriver():
 
         return objects
 
-    def _filter_by_label(self, label):
+    def _filter_by_label(self, label, **kwargs):
+        
+        query_templ = "g.V().LabelContext(\"%s\").In().LabelContext(null)" % (label)
 
-        query = "g.V().LabelContext(\"%s\").In().Tag(\"source_id\").LabelContext(null) \
-            .Out([], \"pred\").All()" % (label)
+        query_end = ".Out([], \"pred\").All()"
+
+        query = "g.V().LabelContext(\"%s\").In().Tag(\"source_id\").LabelContext(null)" % (label)
+
+        if len(kwargs) > 0:
+            key, value = kwargs.popitem()
+            query = "%s.Has(\"%s\", \"%s\")" % (query, key, value)
+
+        for key, value in kwargs.items():
+            if key == "type":
+                return []
+            
+            query_step = ".And(%s.Has(\"%s\", \"%s\"))" % (query_templ, key, value)
+            
+            query = "{}{}".format(query, query_step)
+
+        query = "{}{}".format(query, query_end)
 
         try:
             response = self.client.Send(query).result["result"]
@@ -113,15 +130,15 @@ class DatabaseDriver():
         except:
             return []
 
-    def filter_by(self, node_type, value=None):
+    def filter_by(self, **kwargs):
 
-        upper_node_type = node_type.upper()
+        if "type" in kwargs:
+            label = kwargs.pop("type").upper()
+            if label in self.types:
+                result = self._filter_by_label(label, **kwargs)
 
-        if upper_node_type in self.types:
-            result = self._filter_by_label(upper_node_type)
-
-        else:
-            result = self._filter_by_parameter(node_type, value)
+        # else:
+        #     result = self._filter_by_parameter(node_type, value)
 
         return result
 
