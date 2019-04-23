@@ -41,21 +41,6 @@ class DatabaseDriver():
         except:
             return None
 
-    def get_group_by_id(self, group_id):
-        query = self.g.V("user/" + str(group_id)).Out(["name", "project"], "pred").All()
-
-        try:
-            response = self.client.Send(query).result["result"]
-            user = User(group_id)
-
-            for i in response:
-                setattr(user, i['pred'], i['id'])
-
-            return user
-
-        except:
-            return None
-
     def _update_attr(self, obj, dict):
         if type(getattr(obj, dict['pred'])) == type([]):
             if not re.findall("\d+", dict['id'])[0] in getattr(obj, dict['pred']):
