@@ -12,10 +12,10 @@ class DatabaseDriver():
     }
 
     labels = {
-        type(User()): "USER",
-        type(Group()): "GROUP",
-        type(Project()): "PROJECT",
-        type(Task()): "TASK"
+        type(User()): ("USER", "username"),
+        type(Group()): ("GROUP" "name"),
+        type(Project()): ("PROJECT", "name"),
+        type(Task()): ("TASK", "title")
     }
 
     def __init__(self, address=""):
@@ -168,7 +168,8 @@ class DatabaseDriver():
         object_id = last_used_id
 
         if type(object_) in self.labels:
-            label = self.labels[type(object_)]
+            label = self.labels[type(object_)][0]
+            label_position = self.labels[type(object_)][1]
             type_ = label.lower()
 
             if action == "add":
@@ -182,7 +183,10 @@ class DatabaseDriver():
         
             for key, value in attrs:
                 if key != "id" and value != None and value != []:
-                    quad = (str_id, key, value, label)
+                    if  key == label_position:
+                        quad = (str_id, key, value, label)
+                    else: 
+                        quad = (str_id, key, value)
                     quads.append(quad)
 
         return quads
