@@ -1,3 +1,4 @@
+from chart_builder import delete_chart
 from gantt_cayley import login_manager
 from flask_login import UserMixin
 
@@ -34,12 +35,12 @@ class Group:
 
 class Project:
 
-    def __init__(self, project_id=None, name=None, description=None, chart_link=None, tasks=None):
+    def __init__(self, project_id=None, name=None, chart_link=None, description=None, tasks=None):
         self.id = project_id
         self.name = name
         self.description = description
-        self.chart_link = chart_link
         self.task = [] if tasks is None else tasks
+        self.chart_link = chart_link
 
     def add_task(self, task):
         self.task.append(task)

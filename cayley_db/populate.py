@@ -27,7 +27,7 @@ class User:
         self.group_id = group_id
         self.password = "12345"
         self.label = 'USER'
-        self.email = self.gen_email()
+        self.gen_email()
 
     def gen_email(self):
         domains = ['gantt.com', 'gmail.com']
@@ -101,7 +101,6 @@ class Generator:
         self.groups = []
         self.projects = []
         self.tasks = []
-        print(f'Usernames in total = {len(usernames)}')
         for i in range(int(len(usernames) * Generator.prop_users)):
             group_id = i // self.group_amount
             name = usernames[i]
