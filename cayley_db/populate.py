@@ -127,11 +127,11 @@ class Generator:
         for user in self.users:
             line = "user/{} username {} {} .\n".format(user.id, user.username, user.label)
             f.write(line)
-            line = "user/{} password {} {} .\n".format(user.id, user.password, user.label)
+            line = "user/{} password {} .\n".format(user.id, user.password)
             f.write(line)
-            line = "user/{} email {} {} .\n".format(user.id, user.email, user.label)
+            line = "user/{} email {} .\n".format(user.id, user.email)
             f.write(line)
-            line = "user/{} in_group group/{} {} .\n".format(user.id, user.group_id, user.label)
+            line = "user/{} in_group group/{} .\n".format(user.id, user.group_id)
             f.write(line)
 
             f.write("\n")
@@ -141,7 +141,7 @@ class Generator:
             line = "group/{} name {} {} .\n".format(group.id, group.name, group.label)
             f.write(line)
             for project in group.projects:
-                line = "group/{} project project/{} {} .\n".format(group.id, project.id, group.label)
+                line = "group/{} project project/{} .\n".format(group.id, project.id)
                 f.write(line)
 
             f.write("\n")
@@ -150,10 +150,10 @@ class Generator:
         for project in self.projects:
             line = "project/{} name {} {} .\n".format(project.id, project.name, project.label)
             f.write(line)
-            line = "project/{} description \"{}\" {} .\n".format(project.id, project.description, project.label)
+            line = "project/{} description \"{}\" .\n".format(project.id, project.description)
             f.write(line)
             for task in project.tasks:
-                line = "project/{} task task/{} {} .\n".format(project.id, task.id, project.label)
+                line = "project/{} task task/{} .\n".format(project.id, task.id)
                 f.write(line)
 
             f.write("\n")
@@ -162,14 +162,14 @@ class Generator:
         for task in self.tasks:
             line = "task/{} title {} {} .\n".format(task.id, task.title, task.label)
             f.write(line)
-            line = "task/{} description \"{}\" {} .\n".format(task.id, task.description, task.label)
+            line = "task/{} description \"{}\" .\n".format(task.id, task.description)
             f.write(line)
-            line = "task/{} start_date {} {} .\n".format(task.id, task.start, task.label)
+            line = "task/{} start_date {} .\n".format(task.id, task.start)
             f.write(line)
-            line = "task/{} end_date {} {} .\n".format(task.id, task.end, task.label)
+            line = "task/{} end_date {} .\n".format(task.id, task.end)
             f.write(line)
             for user_id in task.assignee:
-                line = "task/{} assignee user/{} {} .\n".format(task.id, user_id, task.label)
+                line = "task/{} assignee user/{} .\n".format(task.id, user_id)
                 f.write(line)
 
             f.write("\n")
