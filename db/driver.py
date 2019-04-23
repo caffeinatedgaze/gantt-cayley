@@ -1,4 +1,4 @@
-from pyley import CayleyClient, GraphObject
+from gantt_cayley.gc_pyley.pyley import CayleyClient, GraphObject
 from .models import User, Group, Task, Project
 import requests
 import re
@@ -20,7 +20,7 @@ class DatabaseDriver():
 
     def __init__(self, address=""):
 
-        self.client = CayleyClient() if address == "" else CayleyClient(address)
+        self.client = CayleyClient(limit=-1) if address == "" else CayleyClient(address)
         self.g = GraphObject()
 
     def get_user_by_id(self, user_id):
