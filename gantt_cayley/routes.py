@@ -101,9 +101,11 @@ def login():
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
+        # print(len(driver.filter_by('USER')))
         user = driver.get_quads(label='USER', relation='email', value=form.email.data)
         # if user and bcrypt.check_password_hash(user[0].password, form.password.data):
         # yes, it's plaintext -- for the ease of using the generated dataset
+        print(user, form.email.data, form.password.data)
         if user and user[0].password == form.password.data:
             login_user(user[0], remember=form.remember)
             next_page = request.args.get('next')
