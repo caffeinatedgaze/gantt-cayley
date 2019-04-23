@@ -78,11 +78,13 @@ class DatabaseDriver():
 
         return None
 
-    def _parse_object_response(self, response, label):
+    def _parse_object_response(self, response):
         created_objects = []
         objects = []
         for i in response:
             if not i['source_id'] in created_objects:
+                type_ = re.findall(re.compile("[a-z]+"), i['source_id'])[0]
+                label = type_.upper()
                 objects.append(self.types[label](re.findall("\d+", i['source_id'])[0]))
                 created_objects.append(i['source_id'])
             next_object = next((x for x in objects if x.id == re.findall("\d+", i['source_id'])[0]), None)
@@ -90,13 +92,22 @@ class DatabaseDriver():
 
         return objects
 
-    def _filter_by_label(self, label, **kwargs):
-        
-        query_templ = "g.V().LabelContext(\"%s\").In().LabelContext(null)" % (label)
 
-        query_end = ".Out([], \"pred\").All()"
+    def filter_by(self, **kwargs):
 
-        query = "g.V().LabelContext(\"%s\").In().Tag(\"source_id\").LabelContext(null)" % (label)
+        if "type" in kwargs:
+            label = kwargs.pop("type").upper()
+            if label in self.types:
+                query_templ = "g.V().LabelContext(\"%s\").In().LabelContext(null)" % (label)
+                query = "g.V().LabelContext(\"%s\").In().Tag(\"source_id\").LabelContext(null)" % (label)
+            else:
+                return []
+
+        else:
+            query_templ = "g.V()"
+            query = "g.V().Tag(\"source_id\")"
+
+        query_end = ".Out([], \"pred\").All()"        
 
         if len(kwargs) > 0:
             key, value = kwargs.popitem()
@@ -114,33 +125,9 @@ class DatabaseDriver():
 
         try:
             response = self.client.Send(query).result["result"]
-            return self._parse_object_response(response, label)
+            return self._parse_object_response(response)
         except:
             return []
-
-    def _filter_by_parameter(self, parameter, value=None):
-        if value is None:
-            query = self.g.V().Out(parameter).All()
-        else:
-            query = self.g.V().Both(parameter).Is(*value).All()
-
-        try:
-            response = self.client.Send(query).result["result"]
-            return list(set((i['id'] for i in response)))
-        except:
-            return []
-
-    def filter_by(self, **kwargs):
-
-        if "type" in kwargs:
-            label = kwargs.pop("type").upper()
-            if label in self.types:
-                result = self._filter_by_label(label, **kwargs)
-
-        # else:
-        #     result = self._filter_by_parameter(node_type, value)
-
-        return result
 
     def get_quads(self, label, relation, value):
         result = self._filter_by_label(label)
