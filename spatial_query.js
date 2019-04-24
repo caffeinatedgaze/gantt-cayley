@@ -77,11 +77,25 @@ function spatialSearch(x, y, data) {
     data[i]['distance'] = Math.sqrt(data[i]['distance'])
   }
   data.sort(cmp)
-  data = data.splice(0, y)
+  return data
+}
+
+function getDistance(data) {
   for (var i = 0; i < data.length; i++) {
-    data[i] = data[i]['project']
+    data[i] = data[i]['distance']
   }
   return data
 }
+
+function topData(data) {
+  data = data.splice(0, 5)
+  for (var i = 0; i < data.length; i++) {
+    delete data[i]['distance']
+  }
+  return data
+}
+
+
 var answer = spatialSearch({@param1}, {@param2}, countTasksAndAssignees())
-g.Emit(answer)
+var top = topData(answer)
+var forPlot = getDistance(answer)

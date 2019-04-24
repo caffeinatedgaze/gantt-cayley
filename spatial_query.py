@@ -20,6 +20,8 @@ except ValueError:
 spatial_query = open('spatial_query.js').read()
 spatial_query = spatial_query.replace('{@param1}', str(param1))
 spatial_query = spatial_query.replace('{@param2}', str(param2))
+# spatial_query += "\n g.Emit(forPlot)"
+spatial_query += "\n g.Emit(top)"
 
 
 # query = 'g.V().Out(\'username\').All()'
