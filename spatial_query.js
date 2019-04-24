@@ -28,35 +28,42 @@ function countTasks() {
   var projects = get_projects()
   var tasks = {}
 
-  for (var i = 0; i < 100; i++) {
+  for (var i = 0; i < projects.length; i++) {
     temp = find_tasks(projects[i]['id'])
     tasks[projects[i]['id']] = []
-	for (var j = 0; j < temp.length; j++){
+	for (var j = 0; j < temp.length; j++) {
        tasks[projects[i]['id']].push(temp[j]['id'])
     }
+    tasks[projects[i]['id']] = tasks[projects[i]['id']].length  
   }
-  g.Emit(tasks)
+  return tasks
 }
 
-function countAssignees() {
+function countTasksAndAssignees() {
   projects = get_projects()
-  people = {}
-  for (var i = 0; i < 100; i++) {
+  result = {}
+  for (var i = 0; i < projects.length; i++) {
     tasks = find_tasks(projects[i]['id'])
-    people[projects[i]['id']] = []
-    for (var j = 0; j < tasks.length; j++) {
-      people_for_tasks = find_assignees(tasks[j]['id'])
-      for (var k = 0; k < people_for_tasks.length; k++) {
-        people[projects[i]['id']].push(people_for_tasks[k])
-      }
-    }
-    people[projects[i]['id']] = people[projects[i]['id']].filter( onlyUnique );
-    people[projects[i]['id']] = people[projects[i]['id']].length
+    result[i] = {}
+    result[i]['project'] = projects[i]['id']
+    result[i]['tasks'] = []
+    result[i]['assignees'] = []
+	for (var j = 0; j < tasks.length; j++) {
+       result[i]['tasks'].push(tasks[j]['id'])
+       
+       people_for_tasks = find_assignees(tasks[j]['id'])
+       for (var k = 0; k < people_for_tasks.length; k++) {
+         result[i]['assignees'].push(people_for_tasks[k])
+       }
+    } 
+    result[i]['assignees'] = result[i]['assignees'].filter( onlyUnique );
+    result[i]['assignees'] = result[i]['assignees'].length
+    result[i]['tasks'] = result[i]['tasks'].length
   }
-  return people;
+  return result;
 }
 
-countTasks()
+g.Emit(countTasksAndAssignees())
 
 
 g.Emit('It\'s alive!')
