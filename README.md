@@ -1,4 +1,4 @@
-# To start
-`./run`
-`g.V().Tag("source").Out("</film/performance/actor>").Tag("target").All()`
-Then press `Visualize`
+# gantt-cayley
+![GitHub](https://github.com/fenchelfen/gantt-cayley/blob/master/gantt-cayley.png)
+### To run Cayley
+`./cayley http -a cayley/generated.db -d memstore --host:64210`
