@@ -102,7 +102,7 @@ class Generator:
         self.people_per_group = people_per_group
         self.groups_amount = groups_amount
         self.projects_per_group = projects_per_group
-        self.tasks_per_project = random.randint(7, 10)
+        self.tasks_per_project = tasks_per_project
         self.tasks_amount = groups_amount * projects_per_group * tasks_per_project
         self.projects_amount = projects_per_group * groups_amount
         with open('projecttitles', 'r') as f:
@@ -190,12 +190,12 @@ class Generator:
         for user in self.users:
             line = "user/{} username {} {} .\n".format(user.id, user.username, user.label)
             f.write(line)
-            line = "user/{} password {} {} .\n".format(user.id, user.password, user.label)
+            line = "user/{} password {} .\n".format(user.id, user.password)
             f.write(line)
-            line = "user/{} email {} {} .\n".format(user.id, user.email, user.label)
+            line = "user/{} email {} .\n".format(user.id, user.email)
             f.write(line)
             for group in user.groups:
-                line = "user/{} in_group group/{} {} .\n".format(user.id, group.id, user.label)
+                line = "user/{} in_group group/{} .\n".format(user.id, group.id)
                 f.write(line)
 
             f.write("\n")
@@ -205,7 +205,7 @@ class Generator:
             line = "group/{} name {} {} .\n".format(group.id, group.name, group.label)
             f.write(line)
             for project in group.projects:
-                line = "group/{} project project/{} {} .\n".format(group.id, project.id, group.label)
+                line = "group/{} project project/{} .\n".format(group.id, project.id)
                 f.write(line)
 
             f.write("\n")
@@ -214,10 +214,10 @@ class Generator:
         for project in self.projects:
             line = "project/{} name {} {} .\n".format(project.id, project.name, project.label)
             f.write(line)
-            line = "project/{} description \"{}\" {} .\n".format(project.id, project.description, project.label)
+            line = "project/{} description \"{}\" .\n".format(project.id, project.description)
             f.write(line)
             for task in project.tasks:
-                line = "project/{} task task/{} {} .\n".format(project.id, task.id, project.label)
+                line = "project/{} task task/{} .\n".format(project.id, task.id)
                 f.write(line)
 
             f.write("\n")
@@ -226,14 +226,14 @@ class Generator:
         for task in self.tasks:
             line = "task/{} title {} {} .\n".format(task.id, task.title, task.label)
             f.write(line)
-            line = "task/{} description \"{}\" {} .\n".format(task.id, task.description, task.label)
+            line = "task/{} description \"{}\" .\n".format(task.id, task.description)
             f.write(line)
-            line = "task/{} start_date {} {} .\n".format(task.id, task.start, task.label)
+            line = "task/{} start_date {} .\n".format(task.id, task.start)
             f.write(line)
-            line = "task/{} end_date {} {} .\n".format(task.id, task.end, task.label)
+            line = "task/{} end_date {} .\n".format(task.id, task.end)
             f.write(line)
             for user in task.users:
-                line = "task/{} assignee user/{} {} .\n".format(task.id, user.id, task.label)
+                line = "task/{} assignee user/{} .\n".format(task.id, user.id)
                 f.write(line)
 
             f.write("\n")
