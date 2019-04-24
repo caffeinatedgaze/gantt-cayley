@@ -20,7 +20,7 @@ class DatabaseDriver():
 
     def __init__(self, address=""):
 
-        self.client = CayleyClient(limit=-1) if address == "" else CayleyClient(address)
+        self.client = CayleyClient(limit=-1) if address == "" else CayleyClient(url=address, limit=-1)
         self.g = GraphObject()
 
     def get_user_by_id(self, user_id):
@@ -147,10 +147,6 @@ class DatabaseDriver():
         except Exception as e:
             print(e.with_traceback)
             return []
-
-    def get_quads(self, label, relation, value):
-        result = self._filter_by_label(label)
-        return [x for x in result if getattr(x, relation) == value]
 
     def _get_last_id_from_db(self, label):
         query = self.g.V(label).Out("last_id").All()
