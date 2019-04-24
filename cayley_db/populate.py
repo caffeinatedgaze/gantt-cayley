@@ -134,6 +134,9 @@ class Generator:
             f.write(line)
 
             f.write("\n")
+        
+        line = "{} last_id {} .\n\n".format(self.users[0].label, len(self.users) - 1)
+        f.write(line)
 
     def dump_groups(self, f):
         for group in self.groups:
@@ -144,6 +147,9 @@ class Generator:
                 f.write(line)
 
             f.write("\n")
+
+        line = "{} last_id {} .\n\n".format(self.groups[0].label, len(self.groups) - 1)
+        f.write(line)
 
     def dump_projects(self, f):
         for project in self.projects:
@@ -156,6 +162,10 @@ class Generator:
                 f.write(line)
 
             f.write("\n")
+
+        line = "{} last_id {} .\n\n".format(self.projects[0].label, len(self.projects) - 1)
+        f.write(line)
+        
 
     def dump_tasks(self, f):
         for task in self.tasks:
@@ -172,6 +182,9 @@ class Generator:
                 f.write(line)
 
             f.write("\n")
+        
+        line = "{} last_id {} .\n\n".format(self.tasks[0].label, len(self.tasks) - 1)
+        f.write(line)
 
     def dump(self):
         with open(Generator.filename, 'w') as f:
