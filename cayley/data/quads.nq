@@ -28,7 +28,7 @@ group/2 project project/2 .
  
 
 project/1 name "Cross Service" PROJECT .
-project/1 chart_link "https://plot.ly/~fenchelfen/0" .
+project/1 chart_link "https://plot.ly/~fenchelfen/32" .
 project/1 description "Best project in da world" .
 
 project/2 name "Delivery Club" PROJECT .

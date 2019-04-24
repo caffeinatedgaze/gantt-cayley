@@ -102,7 +102,7 @@ class Generator:
         self.people_per_group = people_per_group
         self.groups_amount = groups_amount
         self.projects_per_group = projects_per_group
-        self.tasks_per_project = tasks_per_project
+        self.tasks_per_project = random.randint(7, 10)
         self.tasks_amount = groups_amount * projects_per_group * tasks_per_project
         self.projects_amount = projects_per_group * groups_amount
         with open('projecttitles', 'r') as f:
