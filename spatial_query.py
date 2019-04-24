@@ -11,5 +11,10 @@ r = post(api_url, data=spatial_query)
 print(r.status_code)
 
 result = loads(r.text).get('result', None)
+if result is None:
+    print(loads(r.text))
+else:
+    result = result[0]
+
 print(len(result))
 print(dumps(result, indent=4))
