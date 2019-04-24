@@ -41,6 +41,13 @@ class DatabaseDriver():
         except:
             return None
 
+    def _update_attr(self, obj, dict):
+        if type(getattr(obj, dict['pred'])) == type([]):
+            if not re.findall("\d+", dict['id'])[0] in getattr(obj, dict['pred']):
+                getattr(obj, dict['pred']).append(re.findall("\d+", dict['id'])[0])
+        else:
+            setattr(obj, dict['pred'], dict['id'])
+
     def get_object_by_id(self, object_type, object_id):
 
         obj_id = object_type.lower() + "/" + str(object_id)
@@ -49,7 +56,7 @@ class DatabaseDriver():
     # object_id in form "type/id"
     def _get_object_by_id(self, object_id):
         pattern = re.findall(re.compile("[a-z]+"), object_id)
-        pattern = re.findall(re.compile("[a-z]+"), object_id)
+
         if len(pattern) != 1:
             return None
         label = pattern[0].upper()
