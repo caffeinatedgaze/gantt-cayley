@@ -77,11 +77,11 @@ function spatialSearch(x, y, data) {
     data[i]['distance'] = Math.sqrt(data[i]['distance'])
   }
   data.sort(cmp)
-  data = data.splice(0, 5)
+  data = data.splice(0, y)
   for (var i = 0; i < data.length; i++) {
     data[i] = data[i]['project']
   }
   return data
 }
-var answer = spatialSearch(5, 2, countTasksAndAssignees())
+var answer = spatialSearch({@param1}, {@param2}, countTasksAndAssignees())
 g.Emit(answer)
