@@ -195,7 +195,8 @@ class DatabaseDriver():
                 return []
 
             str_id = type_+"/"+str(object_id)
-        
+            object_.id = object_id
+
             for key, value in attrs:
                 if key != "id" and value != None and value != []:
                     if  key == label_position:
