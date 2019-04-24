@@ -41,13 +41,6 @@ class DatabaseDriver():
         except:
             return None
 
-    def _update_attr(self, obj, dict):
-        if type(getattr(obj, dict['pred'])) == type([]):
-            if not re.findall("\d+", dict['id'])[0] in getattr(obj, dict['pred']):
-                getattr(obj, dict['pred']).append(re.findall("\d+", dict['id'])[0])
-        else:
-            setattr(obj, dict['pred'], dict['id'])
-
     def get_object_by_id(self, object_type, object_id):
 
         obj_id = object_type.lower() + "/" + str(object_id)
@@ -78,18 +71,37 @@ class DatabaseDriver():
 
         return None
 
-    def _parse_object_response(self, response):
-        created_objects = []
-        objects = []
-        for i in response:
-            if not i['source_id'] in created_objects:
-                type_ = re.findall(re.compile("[a-z]+"), i['source_id'])[0]
-                label = type_.upper()
-                objects.append(self.types[label](re.findall("\d+", i['source_id'])[0]))
-                created_objects.append(i['source_id'])
-            next_object = next((x for x in objects if x.id == re.findall("\d+", i['source_id'])[0]), None)
-            self._update_attr(next_object, i)
+    def _transform_to_json(self, response):
+        
+        json_objects = {}
 
+        for record in response:
+            oid, pred, source_id = record['id'], record['pred'], record['source_id']
+            if source_id in json_objects:
+                if pred in json_objects[source_id]:
+                    if type(json_objects[source_id][pred]) == type([]):
+                        json_objects[source_id][pred].append(oid)
+                    else:
+                        json_objects[source_id][pred] = [json_objects[source_id][pred], oid]
+                else:
+                    json_objects[source_id][pred] = oid
+            else:
+                json_objects[source_id] = {pred: oid}
+
+        return json_objects
+
+
+    def _parse_object_response(self, response):
+        objects = []
+        json = self._transform_to_json(response)
+        for key, value in json.items():
+            label = re.findall(re.compile("[a-z]+"), key)[0].upper()
+            id_ = int(re.findall(re.compile("\d+"), key)[0])
+
+            obj = self.types[label](**value)
+            obj.id = id_
+            objects.append(obj)
+        
         return objects
 
 
@@ -108,7 +120,6 @@ class DatabaseDriver():
             query = "g.V().Tag(\"source_id\")"
 
         query_end = ".Out([], \"pred\").All()"        
-
         if len(kwargs) > 0:
             key, value = kwargs.popitem()
             query = "%s.Has(\"%s\", \"%s\")" % (query, key, value)
@@ -126,7 +137,8 @@ class DatabaseDriver():
         try:
             response = self.client.Send(query).result["result"]
             return self._parse_object_response(response)
-        except:
+        except Exception as e:
+            print(e.with_traceback)
             return []
 
     def get_quads(self, label, relation, value):
