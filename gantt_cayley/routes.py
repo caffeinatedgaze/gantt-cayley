@@ -44,7 +44,6 @@ def build_charts():
         tasks = [driver.get_object_by_id('TASK', task_id)
                  for task_id in project.task]
         df = define_data(tasks)
-        print(df)
         project.chart_link = create_chart(df, title=project.name)
     return projects
 
@@ -53,7 +52,6 @@ def build_charts():
 @login_required
 def home():
     projects = build_charts()
-    print([x.name for x in projects])
     if current_user.in_group:
         return render_template('home.html', title='Home',
                                projects=projects,
@@ -106,7 +104,11 @@ def login():
         user = driver.filter_by(type='USER', email=form.email.data)
         # if user and bcrypt.check_password_hash(user[0].password, form.password.data):
         # yes, it's plaintext -- for the ease of using the generated dataset
-        print(user, form.email.data, form.password.data)
+        # print(user, form.email.data, form.password.data)
+        if user:
+            print('User is found', form.email.data)
+        else:
+            print('Not found ', form.email.data, form.password.data)
         if user and user[0].password == form.password.data:
             login_user(user[0], remember=form.remember)
             next_page = request.args.get('next')

@@ -5,8 +5,8 @@ import plotly.plotly as py
 from random import randint, uniform
 import requests
 
-username = 'shittyinstagramvanhalen'
-api_key = '4HaREPLKtBw2m0hLYDKh'
+username = 'fenchelfen'
+api_key = 'a37OXWLzm1HOCeqnuHFc'
 
 tools.set_credentials_file(username=username, api_key=api_key)
 
@@ -44,7 +44,9 @@ def delete_chart(chart_link):
 def _delete_plotly_obj(fid):
     auth = HTTPBasicAuth(username, api_key)
     headers = {'Plotly-Client-Platform': 'python'}
-    print(requests.post('https://api.plot.ly/v2/files/' + fid + '/trash',
-                        auth=auth, headers=headers).status_code)
-    print(requests.delete('https://api.plot.ly/v2/files/' + fid + '/permanent_delete',
-                          auth=auth, headers=headers).status_code)
+    r1 = requests.post('https://api.plot.ly/v2/files/' + fid + '/trash',
+                        auth=auth, headers=headers)
+    # r2 = requests.delete('https://api.plot.ly/v2/files/' + fid + '/permanent_delete',
+    #                       auth=auth, headers=headers)
+    print(r1.status_code, r1.reason)
+    # print(r2.status_code, r2.reason)
