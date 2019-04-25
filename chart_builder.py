@@ -5,8 +5,8 @@ import plotly.plotly as py
 from random import randint, uniform
 import requests
 
-username = 'fenchelfen'
-api_key = 'a37OXWLzm1HOCeqnuHFc'
+username = 'shittyinstagramvanhalen'
+api_key = 'UNtnCr76IxzaPeSNlvml'
 
 tools.set_credentials_file(username=username, api_key=api_key)
 
@@ -27,7 +27,8 @@ def define_data(tasks):
             dict(
                 Task=task.title,
                 Start=task.start_date,
-                Finish=task.end_date
+                Finish=task.end_date,
+                Description=task.description
             )
         )
     return df

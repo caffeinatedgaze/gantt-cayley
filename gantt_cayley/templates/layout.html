@@ -62,9 +62,12 @@
         {% if places %}
             <div class="col-md-4">
                 <div class="content-section">
-                    <h3>Places</h3>
+                    <h3>User information</h3>
                     <p class='text-muted'>From Gantt Cayley with love
                     <ul class="list-group">
+                    <li class="list-group-item list-group-item-light">Name: {{ user.username }}</li>
+                    <li class="list-group-item list-group-item-light">Email: {{ user.email }}</li>
+                    <li class="list-group-item list-group-item-light">Projects</li>
                     </ul>
                     </p>
                 </div>

@@ -39,31 +39,36 @@ def build_chart(project_id):
 
 def build_charts():
     if current_user.in_group:
-        projects = [driver.get_object_by_id('PROJECT', x)
-                    for x in driver.get_object_by_id('GROUP', current_user.in_group[0]).project]
-        for project in projects:
-            tasks = [driver.get_object_by_id('TASK', task_id)
-                     for task_id in project.task]
-            df = define_data(tasks)
-            project.chart_link = create_chart(df, title=project.name)
+        groups = [driver.get_object_by_id('GROUP', x) for x in current_user.in_group]
+        result = []
+        for group in groups:
+            projects = [driver.get_object_by_id('PROJECT', x)
+                        for x in group.project]
+            for project in projects:
+                tasks = [driver.get_object_by_id('TASK', task_id)
+                         for task_id in project.task]
+                df = define_data(tasks)
+                project.chart_link = create_chart(df, title=project.name)
+            result += projects
+        print(result)
+        return result
     else:
-        projects = []
-    return projects
+        return []
 
 
 @app.route('/home/')
 @login_required
 def home():
-    projects = build_charts()
+    result = build_charts()
     return render_template('home.html', title='Home',
-                           projects=projects,
-                           user = current_user,
+                           result=result,
+                           user=current_user,
                            places=True)
 
 
 @app.route('/about/')
 def about():
-    return render_template('about.html', title='About', places=True)
+    return render_template('about.html', title='About', user=current_user, places=True)
 
 
 @app.route('/register/', methods=['GET', 'POST'])
@@ -78,7 +83,7 @@ def register():
         # db.session.commit()
         flash('Your account has been created! Try to login', 'success')
         return redirect(url_for('home'))
-    return render_template('register.html', title='Register', form=form, places=True)
+    return render_template('register.html', title='Register', user=current_user, form=form, places=True)
 
 
 @app.route('/view/<project_id>')
@@ -88,7 +93,7 @@ def view_gantt(project_id):
     project = build_chart(project_id)
     if project:
         chart = p.sub('height=600', get_embed(project.chart_link))
-        return render_template('view_gantt.html', title=project.name, chart=chart, places=False)
+        return render_template('view_gantt.html', title=project.name, user=current_user, chart=chart, places=False)
     else:
         flash("Failed to find '%s'" % project.name, 'danger')
         return redirect(url_for('home'))
@@ -116,15 +121,15 @@ def login():
             flash('You have been logged in!', 'success')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         flash('Login Unsuccessful. Please check email and password', 'danger')
-    return render_template('login.html', title='Login', form=form, places=True)
+    return render_template('login.html', title='Login', form=form, user=current_user, places=True)
 
 
 @app.route('/logout/')
 def logout():
     # projects = [driver.get_object_by_id('PROJECT', x)
     #             for x in driver.get_object_by_id('GROUP', current_user.in_group[0]).project]
-    projects = build_charts()
-    for project in projects:
+    result = build_charts()
+    for project in result:
         delete_chart(project.chart_link)
     logout_user()
     return redirect(url_for('root'))
