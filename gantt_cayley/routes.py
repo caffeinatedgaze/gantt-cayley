@@ -38,13 +38,16 @@ def build_chart(project_id):
 
 
 def build_charts():
-    projects = [driver.get_object_by_id('PROJECT', x)
-                for x in driver.get_object_by_id('GROUP', current_user.in_group[0]).project]
-    for project in projects:
-        tasks = [driver.get_object_by_id('TASK', task_id)
-                 for task_id in project.task]
-        df = define_data(tasks)
-        project.chart_link = create_chart(df, title=project.name)
+    if current_user.in_group:
+        projects = [driver.get_object_by_id('PROJECT', x)
+                    for x in driver.get_object_by_id('GROUP', current_user.in_group[0]).project]
+        for project in projects:
+            tasks = [driver.get_object_by_id('TASK', task_id)
+                     for task_id in project.task]
+            df = define_data(tasks)
+            project.chart_link = create_chart(df, title=project.name)
+    else:
+        projects = []
     return projects
 
 
@@ -52,12 +55,10 @@ def build_charts():
 @login_required
 def home():
     projects = build_charts()
-    if current_user.in_group:
-        return render_template('home.html', title='Home',
-                               projects=projects,
-                               places=True)
-    else:
-        return redirect(url_for('about'))
+    return render_template('home.html', title='Home',
+                           projects=projects,
+                           user = current_user,
+                           places=True)
 
 
 @app.route('/about/')
