@@ -59,18 +59,22 @@
             {% endwith %}
             {% block content %}{% endblock %}
         </div>
-        {% if places %}
+        {% if places and current_user.is_authenticated %}
             <div class="col-md-4">
                 <div class="content-section">
                     <h3>User information</h3>
                     <p class='text-muted'>From Gantt Cayley with love
                     <ul class="list-group">
-                    <li class="list-group-item list-group-item-light">Name: {{ user.username }}</li>
-                    <li class="list-group-item list-group-item-light">Email: {{ user.email }}</li>
-                    <li class="list-group-item list-group-item-light">Projects</li>
+                    <li class="list-group-item list-group-item-light">{{ user.username }}</li>
+                    <li class="list-group-item list-group-item-light">{{ user.email }}</li>
                     </ul>
                     </p>
                 </div>
+                <div class="content=section">
+                    <h3>Projects</h3>
+                    {% for project in result %}
+                        <li class="list-group-item list-group-item-light">{{ project.name }}</li>
+                    {% endfor %}
             </div>
         {% endif %}
     </div>
