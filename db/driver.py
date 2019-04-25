@@ -208,7 +208,7 @@ class DatabaseDriver():
         return quads
 
     def add_object(self, object_):
-        self.add_objects(self, [object_])
+        self.add_objects([object_])
 
     def add_objects(self, objects): 
         quads = []
@@ -248,3 +248,9 @@ class DatabaseDriver():
         
         self.client.DeleteQuads(quads)
         self._update_last_used_id(quads)
+
+
+    def add_task(self, project_id, task):
+        self.add_object(task)
+
+        self.client.AddQuad("project/%d"%project_id, "task", "task/%d"%task.id)
