@@ -233,9 +233,9 @@ class DatabaseDriver():
                 id_ = int(re.findall(re.compile("\d+"), q[0])[0])
                 label = type_.upper()
                 last_id = self._get_last_id_from_db(label)
-                if id_ < last_id:
+                if id_ <= last_id:
                     self.client.DeleteQuad(label, "last_id", str(last_id))
-                    self.client.AddQuad(label, "last_id", str(id_))               
+                    self.client.AddQuad(label, "last_id", str(id_-1))               
                                 
     def delete_object(self, object_):
         self.delete_objects([object_])
@@ -248,7 +248,6 @@ class DatabaseDriver():
         
         self.client.DeleteQuads(quads)
         self._update_last_used_id(quads)
-
 
     def add_task(self, project_id, task):
         self.add_object(task)
