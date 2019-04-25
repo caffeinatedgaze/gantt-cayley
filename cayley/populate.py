@@ -98,7 +98,7 @@ class Generator:
     filename = "generated_db.nq"
     prop_users = 0.5
 
-    def __init__(self, people_per_group=5, groups_amount=500, projects_per_group=2, tasks_per_project=10):
+    def __init__(self, people_per_group=5, groups_amount=500, projects_per_group=2, tasks_per_project=5):
         self.people_per_group = people_per_group
         self.groups_amount = groups_amount
         self.projects_per_group = projects_per_group
@@ -151,7 +151,7 @@ class Generator:
                 project.group = group
 
         for project in self.projects:
-            delta = random.randint(0, 3)
+            delta = random.randint(1, 15)
             tasks_per_project = self.tasks_per_project + delta
             for j in range(tasks_per_project):
                 task = self.gen_task()
@@ -164,7 +164,7 @@ class Generator:
                     s = set()
                     while person.id in s:
                         person = random.choice(project.group.users)
-                    s.add(person)
+                    s.add(person.id)
                     person.add_task(task)
                     task.add_user(person)
 
@@ -241,9 +241,12 @@ class Generator:
             f.write(line)
             line = "task/{} end_date {} .\n".format(task.id, task.end)
             f.write(line)
+            s = set()
             for user in task.users:
-                line = "task/{} assignee user/{} .\n".format(task.id, user.id)
-                f.write(line)
+                if user.id not in s:
+                    line = "task/{} assignee user/{} .\n".format(task.id, user.id)
+                    f.write(line)
+                    s.add(user.id)
 
             f.write("\n")
 
